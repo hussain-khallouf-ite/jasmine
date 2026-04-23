@@ -114,10 +114,40 @@ body {
   border-radius: 8px;
 }
 
-.btn-primary-custom:hover {
+..btn-primary-custom:hover {
   background-color: #1f3f42;
   border-color: #1f3f42;
   transform: translateY(-2px);
+}
+
+/* Authentication Pages */
+.auth-container {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 1rem;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 520px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(47, 93, 98, 0.08);
+}
+
+.auth-card .form-label {
+  font-weight: 600;
+}
+
+.auth-card .form-control:focus {
+  border-color: #2f5d62;
+  box-shadow: 0 0 0 0.18rem rgba(47, 93, 98, 0.15);
+}
+
+.auth-card .alert {
+  margin-bottom: 1.5rem;
 }
 
 /* Features/Apartments Section */

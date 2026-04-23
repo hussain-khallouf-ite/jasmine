@@ -1,8 +1,10 @@
 <?php
+session_start();
 // Initialize logic (in a real app, config would be included here)
 // require_once '../config/database.php';
 $lang = isset($_GET['lang']) && $_GET['lang'] === 'ar' ? 'ar' : 'en';
 $dir = $lang === 'ar' ? 'rtl' : 'ltr';
+$user = $_SESSION['user'] ?? null;
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $lang; ?>" dir="<?php echo $dir; ?>">
@@ -34,7 +36,7 @@ $dir = $lang === 'ar' ? 'rtl' : 'ltr';
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light navbar-custom sticky-top">
         <div class="container">
-            <a class="navbar-brand" href="index.php">
+            <a class="navbar-brand" href="index.php?lang=<?php echo $lang; ?>">
                 <img src="images/logo.png" alt="Al-Yasmin Logo" height="40" class="d-inline-block align-text-top" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'40\' height=\'40\'><circle cx=\'20\' cy=\'20\' r=\'20\' fill=\'%232F5D62\'/></svg>'">
                 Al-Yasmin
             </a>
@@ -44,14 +46,26 @@ $dir = $lang === 'ar' ? 'rtl' : 'ltr';
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" href="index.php">Home</a>
+                        <a class="nav-link active" href="index.php?lang=<?php echo $lang; ?>">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#apartments">Apartments</a>
+                        <a class="nav-link" href="#apartments"><?php echo $lang === 'ar' ? 'الشقق' : 'Apartments'; ?></a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Login</a>
-                    </li>
+                    <?php if ($user): ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="profile.html"><?php echo $lang === 'ar' ? 'ملفي' : 'Profile'; ?></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="logout.php?lang=<?php echo $lang; ?>"><?php echo $lang === 'ar' ? 'تسجيل الخروج' : 'Logout'; ?></a>
+                        </li>
+                    <?php else: ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="login.html"><?php echo $lang === 'ar' ? 'تسجيل الدخول' : 'Login'; ?></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="register.html"><?php echo $lang === 'ar' ? 'إنشاء حساب' : 'Register'; ?></a>
+                        </li>
+                    <?php endif; ?>
                     <li class="nav-item ms-lg-3 d-flex align-items-center">
                         <a class="btn btn-outline-secondary btn-sm" href="?lang=<?php echo $lang === 'ar' ? 'en' : 'ar'; ?>">
                             <?php echo $lang === 'ar' ? 'English' : 'عربي'; ?>

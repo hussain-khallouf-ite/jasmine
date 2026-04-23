@@ -11,6 +11,10 @@ Welcome to the Al-Yasmin Apartment Booking System codebase, built natively in PH
 ```text
 /al-yasmin/
   ├── /public/           ← Web root (index.php, CSS, JS, Images)
+  │   ├── /api/           ← JSON API endpoints for auth and profile
+  │   ├── login.html      ← Login page using AJAX
+  │   ├── register.html   ← Register page using AJAX
+  │   └── profile.html    ← Profile page using AJAX
   ├── /src/              ← Backend application logic
   │   ├── /controllers/  ← PHP request handlers
   │   ├── /models/       ← Database query classes
