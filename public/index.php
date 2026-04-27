@@ -2,31 +2,25 @@
 session_start();
 // Initialize logic (in a real app, config would be included here)
 // require_once '../config/database.php';
-$lang = isset($_GET['lang']) && $_GET['lang'] === 'ar' ? 'ar' : 'en';
-$dir = $lang === 'ar' ? 'rtl' : 'ltr';
 $user = $_SESSION['user'] ?? null;
 ?>
 <!DOCTYPE html>
-<html lang="<?php echo $lang; ?>" dir="<?php echo $dir; ?>">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Al-Yasmin | Luxury Apartment Booking</title>
+    <title>الياسمين | حجز الشقق الفاخرة</title>
     
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Discover premium apartments at Al-Yasmin project in Hama City, Syria. Transparent and efficient booking platform for families and investors.">
+    <meta name="description" content="اكتشف الشقق الفاخرة في مشروع الياسمين في مدينة حماة، سوريا. منصة حجز شفافة وفعالة للعائلات والمستثمرين.">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     
-    <!-- Bootstrap 5 CSS -->
-    <?php if ($dir === 'rtl'): ?>
+    <!-- Bootstrap 5 CSS (RTL) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
-    <?php else: ?>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <?php endif; ?>
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
@@ -36,41 +30,36 @@ $user = $_SESSION['user'] ?? null;
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light navbar-custom sticky-top">
         <div class="container">
-            <a class="navbar-brand" href="index.php?lang=<?php echo $lang; ?>">
-                <img src="images/logo.png" alt="Al-Yasmin Logo" height="40" class="d-inline-block align-text-top" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'40\' height=\'40\'><circle cx=\'20\' cy=\'20\' r=\'20\' fill=\'%232F5D62\'/></svg>'">
-                Al-Yasmin
+            <a class="navbar-brand" href="index.php">
+                <img src="images/logo.png" alt="شعار الياسمين" height="40" class="d-inline-block align-text-top" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'40\' height=\'40\'><circle cx=\'20\' cy=\'20\' r=\'20\' fill=\'%232F5D62\'/></svg>'">
+                الياسمين
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="تبديل التنقل">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" href="index.php?lang=<?php echo $lang; ?>">Home</a>
+                        <a class="nav-link active" href="index.php">الرئيسية</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#apartments"><?php echo $lang === 'ar' ? 'الشقق' : 'Apartments'; ?></a>
+                        <a class="nav-link" href="#apartments">الشقق</a>
                     </li>
                     <?php if ($user): ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="profile.html"><?php echo $lang === 'ar' ? 'ملفي' : 'Profile'; ?></a>
+                            <a class="nav-link" href="profile.html">ملفي</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="logout.php?lang=<?php echo $lang; ?>"><?php echo $lang === 'ar' ? 'تسجيل الخروج' : 'Logout'; ?></a>
+                            <a class="nav-link" href="logout.php">تسجيل الخروج</a>
                         </li>
                     <?php else: ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="login.html"><?php echo $lang === 'ar' ? 'تسجيل الدخول' : 'Login'; ?></a>
+                            <a class="nav-link" href="login.html">تسجيل الدخول</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="register.html"><?php echo $lang === 'ar' ? 'إنشاء حساب' : 'Register'; ?></a>
+                            <a class="nav-link" href="register.html">إنشاء حساب</a>
                         </li>
                     <?php endif; ?>
-                    <li class="nav-item ms-lg-3 d-flex align-items-center">
-                        <a class="btn btn-outline-secondary btn-sm" href="?lang=<?php echo $lang === 'ar' ? 'en' : 'ar'; ?>">
-                            <?php echo $lang === 'ar' ? 'English' : 'عربي'; ?>
-                        </a>
-                    </li>
                 </ul>
             </div>
         </div>
@@ -80,30 +69,30 @@ $user = $_SESSION['user'] ?? null;
     <header class="hero-section">
         <div class="hero-overlay"></div>
         <div class="container hero-content animate-fade-in-down">
-            <h1 class="hero-title">Experience Premium Living in Hama</h1>
-            <p class="hero-subtitle">Discover beautifully designed apartments in the heart of Wadi al-Jawz. Book your perfect home today with Al-Yasmin.</p>
+            <h1 class="hero-title">تجربة سكن فاخرة في حماة</h1>
+            <p class="hero-subtitle">اكتشف شققاً مصممة بشكل جميل في قلب وادي الجوز. احجز منزلك المثالي اليوم مع الياسمين.</p>
             
             <!-- Quick Search Form -->
             <div class="search-card mt-4">
                 <form class="row g-3">
                     <div class="col-md-4">
-                        <select class="form-select" aria-label="Property Type">
-                            <option selected>Property Type</option>
-                            <option value="1">Residential Apartment</option>
-                            <option value="2">Commercial Space</option>
+                        <select class="form-select" aria-label="نوع العقار">
+                            <option selected>نوع العقار</option>
+                            <option value="1">شقة سكنية</option>
+                            <option value="2">مساحة تجارية</option>
                         </select>
                     </div>
                     <div class="col-md-4">
-                        <select class="form-select" aria-label="Bedrooms">
-                            <option selected>Bedrooms</option>
-                            <option value="1">1 Bedroom</option>
-                            <option value="2">2 Bedrooms</option>
-                            <option value="3">3 Bedrooms</option>
-                            <option value="4">4+ Bedrooms</option>
+                        <select class="form-select" aria-label="غرف النوم">
+                            <option selected>غرف النوم</option>
+                            <option value="1">غرفة نوم واحدة</option>
+                            <option value="2">غرفتا نوم</option>
+                            <option value="3">3 غرف نوم</option>
+                            <option value="4">4+ غرف نوم</option>
                         </select>
                     </div>
                     <div class="col-md-4">
-                        <button type="submit" class="btn btn-primary-custom w-100">Search Now</button>
+                        <button type="submit" class="btn btn-primary-custom w-100">ابحث الآن</button>
                     </div>
                 </form>
             </div>
@@ -114,8 +103,8 @@ $user = $_SESSION['user'] ?? null;
     <section id="apartments" class="py-5 bg-light">
         <div class="container py-5">
             <div class="text-center mb-5">
-                <h2 class="section-title">Featured Apartments</h2>
-                <p class="text-muted">Explore our curated selection of premium living spaces</p>
+                <h2 class="section-title">شقق مميزة</h2>
+                <p class="text-muted">استكشف مجموعتنا المختارة من مساحات المعيشة الفاخرة</p>
             </div>
             
             <div class="row g-4 d-flex justify-content-center">
@@ -125,17 +114,17 @@ $user = $_SESSION['user'] ?? null;
                         <div class="property-img w-100" style="background-image: url('https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')"></div>
                         <div class="card-body p-4">
                             <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span class="badge bg-success">Available</span>
-                                <span class="fw-bold text-primary-custom fs-5">$350/mo</span>
+                                <span class="badge bg-success">متاح</span>
+                                <span class="fw-bold text-primary-custom fs-5">$350/شهر</span>
                             </div>
-                            <h5 class="card-title fw-bold mt-2">Premium 3BR Wadi View</h5>
-                            <p class="card-text text-muted small">Spacious apartment with stunning views. Modern finishing.</p>
+                            <h5 class="card-title fw-bold mt-2">شقة فاخرة 3 غرف بإطلالة على الوادي</h5>
+                            <p class="card-text text-muted small">شقة واسعة مع إطلالات خلابة. تشطيب حديث.</p>
                             <div class="d-flex gap-3 text-muted small my-3">
-                                <span><i class="bi bi-door-closed"></i> 3 Rooms</span>
-                                <span><i class="bi bi-rulers"></i> 140 m²</span>
-                                <span><i class="bi bi-building"></i> 4th Fl</span>
+                                <span><i class="bi bi-door-closed"></i> 3 غرف</span>
+                                <span><i class="bi bi-rulers"></i> 140 م²</span>
+                                <span><i class="bi bi-building"></i> الطابق الرابع</span>
                             </div>
-                            <a href="#" class="btn btn-outline-primary w-100 mt-2">View Details</a>
+                            <a href="#" class="btn btn-outline-primary w-100 mt-2">عرض التفاصيل</a>
                         </div>
                     </div>
                 </div>
@@ -145,17 +134,17 @@ $user = $_SESSION['user'] ?? null;
                         <div class="property-img w-100" style="background-image: url('https://images.unsplash.com/photo-1502672260266-1c1de2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')"></div>
                         <div class="card-body p-4">
                             <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span class="badge bg-success">Available</span>
-                                <span class="fw-bold text-primary-custom fs-5">$600/mo</span>
+                                <span class="badge bg-success">متاح</span>
+                                <span class="fw-bold text-primary-custom fs-5">$600/شهر</span>
                             </div>
-                            <h5 class="card-title fw-bold mt-2">Luxury Penthouse</h5>
-                            <p class="card-text text-muted small">Top floor living with private terrace and water storage.</p>
+                            <h5 class="card-title fw-bold mt-2">بنتهاوس فاخر</h5>
+                            <p class="card-text text-muted small">سكن في الطابق الأخير مع تراس خاص وتخزين مياه.</p>
                             <div class="d-flex gap-3 text-muted small my-3">
-                                <span><i class="bi bi-door-closed"></i> 4 Rooms</span>
-                                <span><i class="bi bi-rulers"></i> 210 m²</span>
-                                <span><i class="bi bi-building"></i> 8th Fl</span>
+                                <span><i class="bi bi-door-closed"></i> 4 غرف</span>
+                                <span><i class="bi bi-rulers"></i> 210 م²</span>
+                                <span><i class="bi bi-building"></i> الطابق الثامن</span>
                             </div>
-                            <a href="#" class="btn btn-outline-primary w-100 mt-2">View Details</a>
+                            <a href="#" class="btn btn-outline-primary w-100 mt-2">عرض التفاصيل</a>
                         </div>
                     </div>
                 </div>
@@ -166,7 +155,7 @@ $user = $_SESSION['user'] ?? null;
     <!-- Footer -->
     <footer class="bg-dark text-white py-4 text-center">
         <div class="container">
-            <p class="mb-0">&copy; <?php echo date('Y'); ?> Al-Yasmin Apartment Booking System. All rights reserved.</p>
+            <p class="mb-0">&copy; <?php echo date('Y'); ?> نظام الياسمين لحجز الشقق. جميع الحقوق محفوظة.</p>
         </div>
     </footer>
 

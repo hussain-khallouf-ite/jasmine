@@ -18,7 +18,7 @@ class UserController
                 self::updateProfile();
                 break;
             default:
-                sendJson(['success' => false, 'message' => 'Unsupported request method.'], 405);
+                sendJson(['success' => false, 'message' => 'طريقة الطلب غير مدعومة.'], 405);
         }
     }
 
@@ -26,7 +26,7 @@ class UserController
     {
         $user = currentUser();
         if (!$user) {
-            sendJson(['success' => false, 'message' => 'User not found.'], 404);
+            sendJson(['success' => false, 'message' => 'المستخدم غير موجود.'], 404);
         }
 
         sendJson(['success' => true, 'user' => $user]);
@@ -36,7 +36,7 @@ class UserController
     {
         $user = currentUser();
         if (!$user) {
-            sendJson(['success' => false, 'message' => 'User not found.'], 404);
+            sendJson(['success' => false, 'message' => 'المستخدم غير موجود.'], 404);
         }
 
         $name = sanitizeInput($_POST['name'] ?? '');
@@ -46,22 +46,22 @@ class UserController
         $errors = [];
 
         if ($name === '') {
-            $errors['name'] = 'Name is required.';
+            $errors['name'] = 'الاسم مطلوب.';
         }
 
         if ($email === '') {
-            $errors['email'] = 'Email is required.';
+            $errors['email'] = 'البريد الإلكتروني مطلوب.';
         } elseif (!isValidEmail($email)) {
-            $errors['email'] = 'Enter a valid email address.';
+            $errors['email'] = 'أدخل عنوان بريد إلكتروني صالح.';
         }
 
         $existingUser = User::findByEmail($email);
         if ($existingUser && $existingUser['id'] !== $user['id']) {
-            $errors['email'] = 'This email is already used by another account.';
+            $errors['email'] = 'هذا البريد الإلكتروني مستخدم بالفعل بواسطة حساب آخر.';
         }
 
         if ($password !== '' && strlen($password) < 8) {
-            $errors['password'] = 'Password must be at least 8 characters long.';
+            $errors['password'] = 'يجب أن تتكون كلمة المرور من 8 أحرف على الأقل.';
         }
 
         if (!empty($errors)) {
@@ -79,15 +79,15 @@ class UserController
         }
 
         if (!User::update($user['id'], $updateData)) {
-            sendJson(['success' => false, 'message' => 'Unable to update profile.'], 500);
+            sendJson(['success' => false, 'message' => 'تعذر تحديث الملف الشخصي.'], 500);
         }
 
         $updatedUser = User::findById($user['id']);
         if (!$updatedUser) {
-            sendJson(['success' => false, 'message' => 'Unable to refresh user data.'], 500);
+            sendJson(['success' => false, 'message' => 'تعذر تحديث بيانات المستخدم.'], 500);
         }
 
         loginUser($updatedUser);
-        sendJson(['success' => true, 'message' => 'Profile updated successfully.', 'user' => currentUser()]);
+        sendJson(['success' => true, 'message' => 'تم تحديث الملف الشخصي بنجاح.', 'user' => currentUser()]);
     }
 }

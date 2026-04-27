@@ -38,21 +38,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (!data.success) {
                 if (data.errors) {
-                    showAlert(Object.values(data.errors)[0] || 'Please correct the highlighted fields.');
+                    showAlert(Object.values(data.errors)[0] || 'يرجى تصحيح الحقول المحددة.');
                 } else {
-                    showAlert(data.message || 'Request failed.');
+                    showAlert(data.message || 'فشل الطلب.');
                 }
                 return;
             }
 
             if (form.id === 'profileForm') {
-                showAlert(data.message || 'Profile updated successfully.', 'success');
+                showAlert(data.message || 'تم تحديث الملف الشخصي بنجاح.', 'success');
                 return;
             }
 
             window.location.href = 'profile.html';
         } catch (error) {
-            showAlert('Unable to connect to the server. Please try again later.');
+            showAlert('غير قادر على الاتصال بالخادم. يرجى المحاولة مرة أخرى لاحقاً.');
             console.error(error);
         }
     }
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('createdAt').value = user.created_at ?? '';
             document.getElementById('updatedAt').value = user.updated_at ?? '';
         } catch (error) {
-            showAlert('Unable to load profile data.');
+            showAlert('تعذر تحميل بيانات الملف الشخصي.');
             console.error(error);
         }
     }
@@ -94,9 +94,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.location.href = 'login.html';
                 return;
             }
-            showAlert(data.message || 'Unable to log out.');
+            showAlert(data.message || 'تعذر تسجيل الخروج.');
         } catch (error) {
-            showAlert('Unable to connect to the server.');
+            showAlert('تعذر الاتصال بالخادم.');
             console.error(error);
         }
     }

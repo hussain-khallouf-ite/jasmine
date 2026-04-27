@@ -9,7 +9,7 @@ class AuthController
     public static function handle(string $action, string $method): void
     {
         if ($method !== 'POST') {
-            sendJson(['success' => false, 'message' => 'Only POST requests are allowed.'], 405);
+            sendJson(['success' => false, 'message' => 'يُسمح فقط بطلبات POST.'], 405);
         }
 
         switch ($action) {
@@ -23,7 +23,7 @@ class AuthController
                 self::logout();
                 break;
             default:
-                sendJson(['success' => false, 'message' => 'Unknown action.'], 400);
+                sendJson(['success' => false, 'message' => 'إجراء غير معروف.'], 400);
         }
     }
 
@@ -34,13 +34,13 @@ class AuthController
         $errors = [];
 
         if ($email === '') {
-            $errors['email'] = 'Email is required.';
+            $errors['email'] = 'البريد الإلكتروني مطلوب.';
         } elseif (!isValidEmail($email)) {
-            $errors['email'] = 'Enter a valid email address.';
+            $errors['email'] = 'أدخل عنوان بريد إلكتروني صالح.';
         }
 
         if ($password === '') {
-            $errors['password'] = 'Password is required.';
+            $errors['password'] = 'كلمة المرور مطلوبة.';
         }
 
         if (!empty($errors)) {
@@ -49,15 +49,15 @@ class AuthController
 
         $user = User::findByEmail($email);
         if (!$user || !password_verify($password, $user['password_hash'])) {
-            sendJson(['success' => false, 'message' => 'Invalid email or password.'], 401);
+            sendJson(['success' => false, 'message' => 'البريد الإلكتروني أو كلمة المرور غير صالحة.'], 401);
         }
 
         if ($user['status'] !== 'active') {
-            sendJson(['success' => false, 'message' => 'Your account is not active.'], 403);
+            sendJson(['success' => false, 'message' => 'حسابك غير نشط.'], 403);
         }
 
         loginUser($user);
-        sendJson(['success' => true, 'message' => 'Login successful.', 'user' => currentUser()]);
+        sendJson(['success' => true, 'message' => 'تم تسجيل الدخول بنجاح.', 'user' => currentUser()]);
     }
 
     private static function register(): void
@@ -70,29 +70,29 @@ class AuthController
         $errors = [];
 
         if ($name === '') {
-            $errors['name'] = 'Name is required.';
+            $errors['name'] = 'الاسم مطلوب.';
         }
 
         if ($email === '') {
-            $errors['email'] = 'Email is required.';
+            $errors['email'] = 'البريد الإلكتروني مطلوب.';
         } elseif (!isValidEmail($email)) {
-            $errors['email'] = 'Enter a valid email address.';
+            $errors['email'] = 'أدخل عنوان بريد إلكتروني صالح.';
         }
 
         if ($password === '') {
-            $errors['password'] = 'Password is required.';
+            $errors['password'] = 'كلمة المرور مطلوبة.';
         } elseif (strlen($password) < 8) {
-            $errors['password'] = 'Password must be at least 8 characters long.';
+            $errors['password'] = 'يجب أن تتكون كلمة المرور من 8 أحرف على الأقل.';
         }
 
         if ($confirmPassword === '') {
-            $errors['password_confirm'] = 'Please confirm your password.';
+            $errors['password_confirm'] = 'يرجى تأكيد كلمة المرور.';
         } elseif ($password !== $confirmPassword) {
-            $errors['password_confirm'] = 'Passwords do not match.';
+            $errors['password_confirm'] = 'كلمات المرور غير متطابقة.';
         }
 
         if (User::findByEmail($email)) {
-            $errors['email'] = 'Email is already registered.';
+            $errors['email'] = 'البريد الإلكتروني مسجل بالفعل.';
         }
 
         if (!empty($errors)) {
@@ -107,16 +107,16 @@ class AuthController
         ]);
 
         if (!$newUser) {
-            sendJson(['success' => false, 'message' => 'Unable to create account. Please try again later.'], 500);
+            sendJson(['success' => false, 'message' => 'تعذر إنشاء الحساب. يرجى المحاولة مرة أخرى لاحقاً.'], 500);
         }
 
         loginUser($newUser);
-        sendJson(['success' => true, 'message' => 'Registration successful.', 'user' => currentUser()]);
+        sendJson(['success' => true, 'message' => 'تم التسجيل بنجاح.', 'user' => currentUser()]);
     }
 
     private static function logout(): void
     {
         logoutUser();
-        sendJson(['success' => true, 'message' => 'Logged out successfully.']);
+        sendJson(['success' => true, 'message' => 'تم تسجيل الخروج بنجاح.']);
     }
 }
