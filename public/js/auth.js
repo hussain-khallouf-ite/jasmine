@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            window.location.href = 'profile.html';
+            window.location.href = 'index.php';
         } catch (error) {
             showAlert('غير قادر على الاتصال بالخادم. يرجى المحاولة مرة أخرى لاحقاً.');
             console.error(error);
