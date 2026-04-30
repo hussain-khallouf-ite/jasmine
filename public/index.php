@@ -43,6 +43,9 @@ $user = $_SESSION['user'] ?? null;
                         <a class="nav-link active" href="index.php">الرئيسية</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="apartments.php">استعراض الشقق</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="#apartments">الشقق</a>
                     </li>
                     <?php if ($user): ?>

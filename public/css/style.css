@@ -114,10 +114,37 @@ body {
   border-radius: 8px;
 }
 
-..btn-primary-custom:hover {
+.btn-primary-custom:hover {
   background-color: #1f3f42;
   border-color: #1f3f42;
   transform: translateY(-2px);
+}
+
+.property-badge {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .02em;
+}
+
+.property-meta {
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.property-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: #6c757d;
+}
+
+.property-meta i {
+  font-size: 1rem;
+}
+
+.property-description {
+  min-height: 72px;
 }
 
 /* Authentication Pages */
