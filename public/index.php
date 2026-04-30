@@ -43,10 +43,10 @@ $user = $_SESSION['user'] ?? null;
                         <a class="nav-link active" href="index.php">الرئيسية</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="apartments.php">استعراض الشقق</a>
+                        <a class="nav-link" href="proprites.php">استعراض الشقق</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#apartments">الشقق</a>
+                        <a class="nav-link" href="#proprites">الشقق</a>
                     </li>
                     <?php if ($user): ?>
                         <li class="nav-item">
@@ -103,7 +103,7 @@ $user = $_SESSION['user'] ?? null;
     </header>
 
     <!-- Featured Properties -->
-    <section id="apartments" class="py-5 bg-light">
+    <section id="proprites" class="py-5 bg-light">
         <div class="container py-5">
             <div class="text-center mb-5">
                 <h2 class="section-title">شقق مميزة</h2>

@@ -1,34 +1,8 @@
 <?php
-require_once __DIR__ . '/../config/database.php';
-
-function fetchApartments(PDO $pdo): array
-{
-    $stmt = $pdo->prepare(
-        'SELECT id, title, description, location, image_url, rooms, size_m2, floor, price_per_month, status FROM properties WHERE status = :status ORDER BY created_at DESC'
-    );
-    $stmt->execute(['status' => 'available']);
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
-
-function formatPrice(float $price): string
-{
-    return number_format($price, 0, '.', ',') . ' $ / شهر';
-}
-
-function escape(string $value): string
-{
-    return htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
-}
-
-$defaultImage = 'data:image/svg+xml;charset=UTF-8,' . rawurlencode('<svg xmlns="http://www.w3.org/2000/svg" width="700" height="420"><rect width="100%" height="100%" fill="#E9ECEF"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#6C757D" font-family="Arial,sans-serif" font-size="26">No Image Available</text></svg>');
-$errorMessage = null;
-$apartments = [];
-
-try {
-    $apartments = fetchApartments($pdo);
-} catch (PDOException $e) {
-    $errorMessage = 'تعذر تحميل الشقق في الوقت الحالي. يرجى المحاولة مرة أخرى لاحقاً.';
-}
+/**
+ * @var array $proprites
+ * @var string|null $errorMessage
+ */
 ?>
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
@@ -60,7 +34,7 @@ try {
                         <a class="nav-link" href="index.php">الرئيسية</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="apartments.php">استعراض الشقق</a>
+                        <a class="nav-link active" href="proprites.php">استعراض الشقق</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="login.html">تسجيل الدخول</a>
@@ -86,29 +60,29 @@ try {
                 <div class="alert alert-danger"><?php echo escape($errorMessage); ?></div>
             <?php endif; ?>
 
-            <?php if (empty($apartments) && !$errorMessage): ?>
+            <?php if (empty($proprites) && !$errorMessage): ?>
                 <div class="text-center py-5">
                     <h3 class="text-muted mb-3">لا توجد شقق متاحة حالياً</h3>
                     <p class="mb-0">يرجى العودة لاحقاً للاطلاع على أحدث العروض.</p>
                 </div>
             <?php else: ?>
                 <div class="row g-4">
-                    <?php foreach ($apartments as $apartment): ?>
-                        <?php $image = !empty($apartment['image_url']) ? $apartment['image_url'] : $defaultImage; ?>
+                    <?php foreach ($proprites as $proprite): ?>
+                        <?php $image = !empty($proprite['image_url']) ? $proprite['image_url'] : getDefaultPropertyImage(); ?>
                         <div class="col-sm-12 col-md-6 col-xl-4">
                             <div class="card property-card h-100">
                                 <div class="property-img" style="background-image: url('<?php echo escape($image); ?>');"></div>
                                 <div class="card-body p-4 d-flex flex-column">
                                     <div class="d-flex justify-content-between align-items-center mb-3">
                                         <span class="badge bg-success property-badge">متاح</span>
-                                        <span class="fw-bold text-primary-custom fs-5"><?php echo escape(formatPrice((float)$apartment['price_per_month'])); ?></span>
+                                        <span class="fw-bold text-primary-custom fs-5"><?php echo escape(formatPrice((float)$proprite['price_per_month'])); ?></span>
                                     </div>
-                                    <h5 class="card-title fw-bold"><?php echo escape($apartment['title']); ?></h5>
-                                    <p class="text-muted mb-3 small property-description"><?php echo escape($apartment['description']); ?></p>
+                                    <h5 class="card-title fw-bold"><?php echo escape($proprite['title']); ?></h5>
+                                    <p class="text-muted mb-3 small property-description"><?php echo escape($proprite['description']); ?></p>
                                     <div class="d-flex property-meta flex-wrap mb-3">
-                                        <span><i class="bi bi-geo-alt"></i><?php echo escape($apartment['location']); ?></span>
-                                        <span><i class="bi bi-door-closed"></i><?php echo escape((int)$apartment['rooms']); ?> غرف</span>
-                                        <span><i class="bi bi-aspect-ratio"></i><?php echo escape((float)$apartment['size_m2']); ?> م²</span>
+                                        <span><i class="bi bi-geo-alt"></i><?php echo escape($proprite['location']); ?></span>
+                                        <span><i class="bi bi-door-closed"></i><?php echo escape((int)$proprite['rooms']); ?> غرف</span>
+                                        <span><i class="bi bi-aspect-ratio"></i><?php echo escape((float)$proprite['size_m2']); ?> م²</span>
                                     </div>
                                     <div class="mt-auto">
                                         <a href="index.php" class="btn btn-outline-primary w-100">عرض التفاصيل</a>

@@ -32,6 +32,11 @@ class Property
         }, $properties);
     }
 
+    public static function getAvailable(int $limit = 12): array
+    {
+        return self::getAll(['limit' => $limit, 'status' => 'available']);
+    }
+
     public static function findById(int $id): ?array
     {
         $pdo = getPDO();

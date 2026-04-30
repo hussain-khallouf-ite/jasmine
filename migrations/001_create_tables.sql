@@ -1,5 +1,5 @@
 -- 001_create_tables.sql
--- Al-Yasmin Apartment Booking System Schema
+-- Al-Yasmin Proprites Booking System Schema
 
 CREATE DATABASE IF NOT EXISTS alyasmin_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE alyasmin_db;
