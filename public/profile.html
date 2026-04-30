@@ -13,17 +13,26 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-light navbar-custom sticky-top">
         <div class="container">
-            <a class="navbar-brand" href="index.php">الياسمين</a>
+            <a class="navbar-brand" href="index.html">الياسمين</a>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="index.php">الرئيسية</a>
+                        <a class="nav-link" href="index.html">الرئيسية</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="profile.html">الملف الشخصي</a>
+                        <a class="nav-link" href="properties.html">استعراض الشقق</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" id="logoutLink">تسجيل الخروج</a>
+                    <li class="nav-item auth-user" style="display: none;">
+                        <a class="nav-link active" href="profile.html">ملفي</a>
+                    </li>
+                    <li class="nav-item auth-user" style="display: none;">
+                        <a class="nav-link" id="logoutLink" href="#">تسجيل الخروج</a>
+                    </li>
+                    <li class="nav-item auth-guest">
+                        <a class="nav-link" href="login.html">تسجيل الدخول</a>
+                    </li>
+                    <li class="nav-item auth-guest">
+                        <a class="nav-link" href="register.html">إنشاء حساب</a>
                     </li>
                 </ul>
             </div>
