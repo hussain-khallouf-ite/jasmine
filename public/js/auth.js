@@ -117,4 +117,27 @@ document.addEventListener('DOMContentLoaded', () => {
     if (logoutLink) {
         logoutLink.addEventListener('click', handleLogout);
     }
+
+    // Global Auth Check for Navbar
+    async function checkAuth() {
+        try {
+            const response = await fetch('api/auth.php?action=check', { method: 'GET' });
+            const data = await response.json();
+            
+            const guestLinks = document.querySelectorAll('.auth-guest');
+            const userLinks = document.querySelectorAll('.auth-user');
+            
+            if (data.success) {
+                guestLinks.forEach(el => el.style.display = 'none');
+                userLinks.forEach(el => el.style.display = 'block');
+            } else {
+                guestLinks.forEach(el => el.style.display = 'block');
+                userLinks.forEach(el => el.style.display = 'none');
+            }
+        } catch (error) {
+            console.error('Error checking auth status', error);
+        }
+    }
+
+    checkAuth();
 });
