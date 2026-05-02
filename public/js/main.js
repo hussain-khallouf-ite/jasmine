@@ -28,4 +28,61 @@ document.addEventListener('DOMContentLoaded', () => {
             e.target.style.transform = 'translateY(-2px)'; // Return to hover state
         }
     });
+
+    // Load featured properties
+    const featuredList = document.getElementById('featuredPropertiesList');
+    const template = document.getElementById('propertyCardTemplate');
+    const errorMessage = document.getElementById('errorMessage');
+
+    if (featuredList && template) {
+        function formatPrice(price) {
+            return new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                maximumFractionDigits: 0
+            }).format(price) + '/شهر';
+        }
+
+        async function loadFeaturedProperties() {
+            try {
+                const response = await fetch('api/properties.php?limit=3');
+                const data = await response.json();
+
+                if (!data.success) {
+                    if (errorMessage) {
+                        errorMessage.textContent = data.message || 'تعذر تحميل الشقق في الوقت الحالي.';
+                        errorMessage.classList.remove('d-none');
+                    }
+                    return;
+                }
+
+                const properties = data.properties || [];
+
+                properties.forEach(property => {
+                    const clone = template.content.cloneNode(true);
+                    
+                    const imgDiv = clone.querySelector('.property-img');
+                    const image = property.image_url ? property.image_url : 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600"><rect width="800" height="600" fill="%23f0f0f0"/><text x="50%" y="50%" font-family="Arial" font-size="24" fill="%23999" dominant-baseline="middle" text-anchor="middle">صورة غير متوفرة</text></svg>';
+                    imgDiv.style.backgroundImage = `url('${image}')`;
+                    
+                    clone.querySelector('.property-price').textContent = formatPrice(parseFloat(property.price_per_month));
+                    clone.querySelector('.property-title').textContent = property.title;
+                    clone.querySelector('.property-description').textContent = property.description;
+                    clone.querySelector('.property-location').textContent = property.location;
+                    clone.querySelector('.property-rooms').textContent = property.rooms;
+                    clone.querySelector('.property-size').textContent = property.size_m2;
+                    
+                    featuredList.appendChild(clone);
+                });
+            } catch (error) {
+                console.error('Error fetching featured properties:', error);
+                if (errorMessage) {
+                    errorMessage.textContent = 'حدث خطأ في الاتصال بالخادم.';
+                    errorMessage.classList.remove('d-none');
+                }
+            }
+        }
+
+        loadFeaturedProperties();
+    }
 });

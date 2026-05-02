@@ -9,12 +9,31 @@ class Property
         $pdo = getPDO();
         $limit = isset($options['limit']) ? (int)$options['limit'] : 12;
         $statusFilter = $options['status'] ?? 'available';
+        $typeFilter = $options['type'] ?? null;
+        $roomsFilter = $options['rooms'] ?? null;
 
-        $stmt = $pdo->prepare(
-            'SELECT id, title, description, location, image_url, type, rooms, size_m2, floor, price_per_month, status, amenities_json, created_at FROM properties WHERE status = :status ORDER BY created_at DESC LIMIT :limit'
-        );
-        $stmt->bindValue(':status', $statusFilter, PDO::PARAM_STR);
-        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $sql = 'SELECT id, title, description, location, image_url, type, rooms, size_m2, floor, price_per_month, status, amenities_json, created_at FROM properties WHERE status = :status';
+        $params = [':status' => $statusFilter];
+
+        if ($typeFilter) {
+            $sql .= ' AND type = :type';
+            $params[':type'] = $typeFilter;
+        }
+
+        if ($roomsFilter) {
+            $sql .= ' AND rooms >= :rooms';
+            $params[':rooms'] = (int)$roomsFilter;
+        }
+
+        $sql .= ' ORDER BY created_at DESC LIMIT :limit';
+        $params[':limit'] = $limit;
+
+        $stmt = $pdo->prepare($sql);
+        
+        foreach ($params as $key => $value) {
+            $stmt->bindValue($key, $value, is_int($value) ? PDO::PARAM_INT : PDO::PARAM_STR);
+        }
+        
         $stmt->execute();
 
         $properties = $stmt->fetchAll(PDO::FETCH_ASSOC);

@@ -16,7 +16,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function loadProperties() {
         try {
-            const response = await fetch('api/properties.php');
+            const urlParams = new URLSearchParams(window.location.search);
+            let apiUrl = 'api/properties.php?';
+            
+            if (urlParams.has('type') && urlParams.get('type') !== '') {
+                apiUrl += `type=${urlParams.get('type')}&`;
+            }
+            if (urlParams.has('rooms') && urlParams.get('rooms') !== '') {
+                apiUrl += `rooms=${urlParams.get('rooms')}&`;
+            }
+
+            const response = await fetch(apiUrl);
             const data = await response.json();
 
             if (!data.success) {

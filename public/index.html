@@ -68,17 +68,17 @@
             
             <!-- Quick Search Form -->
             <div class="search-card mt-4">
-                <form class="row g-3">
+                <form action="properties.html" method="GET" class="row g-3">
                     <div class="col-md-4">
-                        <select class="form-select" aria-label="نوع العقار">
-                            <option selected>نوع العقار</option>
-                            <option value="1">شقة سكنية</option>
-                            <option value="2">مساحة تجارية</option>
+                        <select name="type" class="form-select" aria-label="نوع العقار">
+                            <option value="" selected>نوع العقار</option>
+                            <option value="residential">شقة سكنية</option>
+                            <option value="commercial">مساحة تجارية</option>
                         </select>
                     </div>
                     <div class="col-md-4">
-                        <select class="form-select" aria-label="غرف النوم">
-                            <option selected>غرف النوم</option>
+                        <select name="rooms" class="form-select" aria-label="غرف النوم">
+                            <option value="" selected>غرف النوم</option>
                             <option value="1">غرفة نوم واحدة</option>
                             <option value="2">غرفتا نوم</option>
                             <option value="3">3 غرف نوم</option>
@@ -101,47 +101,9 @@
                 <p class="text-muted">استكشف مجموعتنا المختارة من مساحات المعيشة الفاخرة</p>
             </div>
             
-            <div class="row g-4 d-flex justify-content-center">
-                <!-- Fallback Static Cards for Frontend Preview -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="card property-card h-100">
-                        <div class="property-img w-100" style="background-image: url('https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')"></div>
-                        <div class="card-body p-4">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span class="badge bg-success">متاح</span>
-                                <span class="fw-bold text-primary-custom fs-5">$350/شهر</span>
-                            </div>
-                            <h5 class="card-title fw-bold mt-2">شقة فاخرة 3 غرف بإطلالة على الوادي</h5>
-                            <p class="card-text text-muted small">شقة واسعة مع إطلالات خلابة. تشطيب حديث.</p>
-                            <div class="d-flex gap-3 text-muted small my-3">
-                                <span><i class="bi bi-door-closed"></i> 3 غرف</span>
-                                <span><i class="bi bi-rulers"></i> 140 م²</span>
-                                <span><i class="bi bi-building"></i> الطابق الرابع</span>
-                            </div>
-                            <a href="#" class="btn btn-outline-primary w-100 mt-2">عرض التفاصيل</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-4">
-                    <div class="card property-card h-100">
-                        <div class="property-img w-100" style="background-image: url('https://images.unsplash.com/photo-1502672260266-1c1de2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')"></div>
-                        <div class="card-body p-4">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span class="badge bg-success">متاح</span>
-                                <span class="fw-bold text-primary-custom fs-5">$600/شهر</span>
-                            </div>
-                            <h5 class="card-title fw-bold mt-2">بنتهاوس فاخر</h5>
-                            <p class="card-text text-muted small">سكن في الطابق الأخير مع تراس خاص وتخزين مياه.</p>
-                            <div class="d-flex gap-3 text-muted small my-3">
-                                <span><i class="bi bi-door-closed"></i> 4 غرف</span>
-                                <span><i class="bi bi-rulers"></i> 210 م²</span>
-                                <span><i class="bi bi-building"></i> الطابق الثامن</span>
-                            </div>
-                            <a href="#" class="btn btn-outline-primary w-100 mt-2">عرض التفاصيل</a>
-                        </div>
-                    </div>
-                </div>
+            <div id="errorMessage" class="alert alert-danger d-none"></div>
+            <div id="featuredPropertiesList" class="row g-4 d-flex justify-content-center">
+                <!-- Properties will be dynamically loaded here by JS -->
             </div>
         </div>
     </section>
@@ -157,5 +119,30 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/main.js"></script>
     <script src="js/auth.js"></script>
+
+    <!-- Templates for property card (hidden) -->
+    <template id="propertyCardTemplate">
+        <div class="col-sm-12 col-md-6 col-xl-4">
+            <div class="card property-card h-100">
+                <div class="property-img"></div>
+                <div class="card-body p-4 d-flex flex-column">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="badge bg-success property-badge">متاح</span>
+                        <span class="fw-bold text-primary-custom fs-5 property-price"></span>
+                    </div>
+                    <h5 class="card-title fw-bold property-title"></h5>
+                    <p class="text-muted mb-3 small property-description"></p>
+                    <div class="d-flex property-meta flex-wrap mb-3">
+                        <span><i class="bi bi-geo-alt"></i> <span class="property-location"></span></span>
+                        <span><i class="bi bi-door-closed"></i> <span class="property-rooms"></span> غرف</span>
+                        <span><i class="bi bi-aspect-ratio"></i> <span class="property-size"></span> م²</span>
+                    </div>
+                    <div class="mt-auto">
+                        <a href="index.html" class="btn btn-outline-primary w-100">عرض التفاصيل</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
 </body>
 </html>

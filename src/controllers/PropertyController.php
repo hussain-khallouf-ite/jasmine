@@ -20,8 +20,20 @@ class PropertyController
 
     private static function list(): void
     {
-        $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 12;
-        $properties = Property::getAll(['limit' => $limit, 'status' => 'available']);
+        $options = [
+            'limit' => isset($_GET['limit']) ? (int)$_GET['limit'] : 12,
+            'status' => 'available'
+        ];
+
+        if (!empty($_GET['type'])) {
+            $options['type'] = $_GET['type'];
+        }
+
+        if (!empty($_GET['rooms'])) {
+            $options['rooms'] = $_GET['rooms'];
+        }
+
+        $properties = Property::getAll($options);
 
         sendJson(['success' => true, 'properties' => $properties]);
     }
