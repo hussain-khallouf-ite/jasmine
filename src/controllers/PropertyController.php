@@ -11,7 +11,11 @@ class PropertyController
     {
         switch ($method) {
             case 'GET':
-                self::list();
+                if (isset($_GET['id'])) {
+                    self::get((int)$_GET['id']);
+                } else {
+                    self::list();
+                }
                 break;
             default:
                 sendJson(['success' => false, 'message' => 'طريقة الطلب غير مدعومة.'], 405);
@@ -36,6 +40,18 @@ class PropertyController
         $properties = Property::getAll($options);
 
         sendJson(['success' => true, 'properties' => $properties]);
+    }
+
+    private static function get(int $id): void
+    {
+        $property = Property::findById($id);
+
+        if (!$property) {
+            sendJson(['success' => false, 'message' => 'الشقة غير موجودة.'], 404);
+            return;
+        }
+
+        sendJson(['success' => true, 'property' => $property]);
     }
 
     public static function renderListPage(): void

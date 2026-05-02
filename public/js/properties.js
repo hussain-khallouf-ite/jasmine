@@ -56,6 +56,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 clone.querySelector('.property-rooms').textContent = property.rooms;
                 clone.querySelector('.property-size').textContent = property.size_m2;
                 
+                const detailsLink = clone.querySelector('a.btn');
+                if (detailsLink) {
+                    detailsLink.href = `property.html?id=${property.id}`;
+                }
+                
                 propertiesList.appendChild(clone);
             });
             
