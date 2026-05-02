@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة الشقق | الياسمين</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap 5 CSS (RTL) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <!-- Admin Custom CSS -->
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+    <div class="admin-wrapper">
+        <!-- Sidebar -->
+        <nav class="admin-sidebar">
+            <div class="sidebar-header">
+                <h3>لوحة الإدارة</h3>
+            </div>
+            
+            <ul class="list-unstyled components">
+                <li>
+                    <a href="index.html"><i class="bi bi-speedometer2"></i> الرئيسية</a>
+                </li>
+                <li class="active">
+                    <a href="properties.html"><i class="bi bi-building"></i> الشقق</a>
+                </li>
+                <li>
+                    <a href="users.html"><i class="bi bi-people"></i> المستخدمين</a>
+                </li>
+                <li>
+                    <a href="#"><i class="bi bi-gear"></i> الإعدادات</a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Page Content -->
+        <div class="admin-content">
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand-lg admin-navbar">
+                <div class="container-fluid">
+                    <span class="navbar-brand mb-0 h1">إدارة الشقق</span>
+                    <div class="d-flex align-items-center ms-auto">
+                        <span class="me-3">مرحباً، <span id="adminName">المدير</span></span>
+                        <a href="#" id="adminLogoutBtn" class="btn btn-outline-danger btn-sm">تسجيل الخروج</a>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Main Content area -->
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card dashboard-card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center mb-4">
+                                    <h5 class="card-title mb-0">قائمة الشقق</h5>
+                                    <button class="btn btn-primary-custom" onclick="openAddModal()">
+                                        <i class="bi bi-plus-circle"></i> إضافة شقة جديدة
+                                    </button>
+                                </div>
+                                
+                                <div id="propertiesMessage"></div>
+
+                                <div class="table-responsive">
+                                    <table class="table table-hover align-middle">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>المعرف</th>
+                                                <th>الصورة</th>
+                                                <th>العنوان</th>
+                                                <th>النوع</th>
+                                                <th>المساحة / الغرف</th>
+                                                <th>السعر (شهرياً)</th>
+                                                <th>الحالة</th>
+                                                <th>إجراءات</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="propertiesTableBody">
+                                            <tr><td colspan="8" class="text-center">جاري التحميل...</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Property Modal -->
+    <div class="modal fade" id="propertyModal" tabindex="-1" aria-labelledby="propertyModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form id="propertyForm">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="propertyModalLabel">إضافة شقة</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="إغلاق"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="modalMessage"></div>
+                        <input type="hidden" id="propertyId" name="id">
+                        
+                        <div class="row g-3">
+                            <div class="col-md-8">
+                                <label for="title" class="form-label">العنوان <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="title" name="title" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="type" class="form-label">النوع <span class="text-danger">*</span></label>
+                                <select class="form-select" id="type" name="type" required>
+                                    <option value="residential">سكنية</option>
+                                    <option value="commercial">تجارية</option>
+                                </select>
+                            </div>
+                            
+                            <div class="col-12">
+                                <label for="description" class="form-label">الوصف</label>
+                                <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label for="location" class="form-label">الموقع</label>
+                                <input type="text" class="form-control" id="location" name="location">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="image_url" class="form-label">رابط الصورة</label>
+                                <input type="text" class="form-control" id="image_url" name="image_url">
+                            </div>
+                            
+                            <div class="col-md-3">
+                                <label for="rooms" class="form-label">الغرف <span class="text-danger">*</span></label>
+                                <input type="number" class="form-control" id="rooms" name="rooms" min="1" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="size_m2" class="form-label">المساحة (م²) <span class="text-danger">*</span></label>
+                                <input type="number" class="form-control" id="size_m2" name="size_m2" min="1" step="0.01" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="floor" class="form-label">الطابق</label>
+                                <input type="number" class="form-control" id="floor" name="floor">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="price_per_month" class="form-label">السعر (شهرياً) <span class="text-danger">*</span></label>
+                                <input type="number" class="form-control" id="price_per_month" name="price_per_month" min="1" step="0.01" required>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label for="status" class="form-label">الحالة <span class="text-danger">*</span></label>
+                                <select class="form-select" id="status" name="status" required>
+                                    <option value="available">متاحة</option>
+                                    <option value="reserved">محجوزة</option>
+                                    <option value="unavailable">غير متاحة</option>
+                                </select>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label class="form-label">المرافق (مفصولة بفاصلة)</label>
+                                <input type="text" class="form-control" id="amenities" name="amenities" placeholder="مثال: واي فاي, مسبح, تكييف">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                        <button type="submit" class="btn btn-primary-custom" id="savePropertyBtn">حفظ</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Admin Auth and Properties Logic -->
+    <script src="js/auth.js"></script>
+    <script src="js/properties.js"></script>
+</body>
+</html>
