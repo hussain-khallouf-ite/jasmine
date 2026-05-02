@@ -9,7 +9,24 @@ document.addEventListener('DOMContentLoaded', () => {
     if (form) {
         form.addEventListener('submit', handlePropertySubmit);
     }
+
+    const imageUrlInput = document.getElementById('image_url');
+    if (imageUrlInput) {
+        imageUrlInput.addEventListener('input', updateImagePreview);
+    }
 });
+
+function updateImagePreview() {
+    const url = document.getElementById('image_url').value;
+    const preview = document.getElementById('imagePreview');
+    if (url && url.trim() !== '') {
+        preview.src = url;
+        preview.classList.remove('d-none');
+    } else {
+        preview.classList.add('d-none');
+        preview.src = '';
+    }
+}
 
 async function fetchProperties() {
     try {
@@ -79,6 +96,7 @@ function openAddModal() {
     document.getElementById('propertyId').value = '';
     document.getElementById('propertyModalLabel').textContent = 'إضافة شقة جديدة';
     document.getElementById('modalMessage').innerHTML = '';
+    updateImagePreview();
     propertyModal.show();
 }
 
@@ -111,6 +129,7 @@ function openEditModal(id) {
     }
     document.getElementById('amenities').value = amenitiesStr;
 
+    updateImagePreview();
     propertyModal.show();
 }
 
