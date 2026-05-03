@@ -21,8 +21,15 @@ class Property
         }
 
         if ($roomsFilter) {
-            $sql .= ' AND rooms >= :rooms';
-            $params[':rooms'] = (int)$roomsFilter;
+            $roomsValue = (int)$roomsFilter;
+            // For 1, 2, 3: exact match. For 4+: greater than or equal
+            if ($roomsValue >= 4) {
+                $sql .= ' AND rooms >= :rooms';
+                $params[':rooms'] = 4;
+            } else {
+                $sql .= ' AND rooms = :rooms';
+                $params[':rooms'] = $roomsValue;
+            }
         }
 
         $sql .= ' ORDER BY created_at DESC LIMIT :limit';
