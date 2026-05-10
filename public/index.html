@@ -71,14 +71,14 @@
                 <form action="properties.html" method="GET" class="row g-3">
                     <div class="col-md-4">
                         <select name="type" class="form-select" aria-label="نوع العقار">
-                            <option value="" selected>نوع العقار</option>
+                            <option value="" disabled>نوع العقار</option>
                             <option value="residential">شقة سكنية</option>
                             <option value="commercial">مساحة تجارية</option>
                         </select>
                     </div>
                     <div class="col-md-4">
-                        <select name="rooms" class="form-select" aria-label="غرف النوم">
-                            <option value="" selected>غرف النوم</option>
+                        <select name="rooms" class="form-select" aria-label="غرف النوم"  required>
+                            <option  disabled>عدد الغرف</option>
                             <option value="1">غرفة نوم واحدة</option>
                             <option value="2">غرفتا نوم</option>
                             <option value="3">3 غرف نوم</option>
