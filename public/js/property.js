@@ -91,13 +91,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Booking Button
     document.getElementById('bookBtn').addEventListener('click', () => {
-        // Here we could check auth status and either redirect to login or show booking modal
-        // For now, redirect to a hypothetical booking page or login
         const token = localStorage.getItem('token');
         if (token) {
-            alert('سيتم توجيهك إلى صفحة الحجز...');
+            window.location.href = `booking.html?id=${propertyId}`;
         } else {
-            window.location.href = `login.html?redirect=property.html?id=${propertyId}`;
+            window.location.href = `login.html?redirect=booking.html?id=${propertyId}`;
         }
     });
 });
