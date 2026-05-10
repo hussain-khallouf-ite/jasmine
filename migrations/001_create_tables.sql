@@ -1,5 +1,5 @@
 -- 001_create_tables.sql
--- Al-Yasmin Apartment Booking System Schema
+-- Al-Yasmin Properties Booking System Schema
 
 CREATE DATABASE IF NOT EXISTS alyasmin_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE alyasmin_db;
@@ -22,6 +22,8 @@ CREATE TABLE properties (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     description TEXT,
+    location VARCHAR(255) NOT NULL DEFAULT 'غير محددة',
+    image_url VARCHAR(255),
     type ENUM('residential', 'commercial') DEFAULT 'residential',
     rooms INT NOT NULL,
     size_m2 DECIMAL(10,2) NOT NULL,

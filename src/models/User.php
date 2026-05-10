@@ -58,4 +58,18 @@ class User
         $stmt = $pdo->prepare($sql);
         return $stmt->execute($fields);
     }
+
+    public static function getAll(): array
+    {
+        $pdo = getPDO();
+        $stmt = $pdo->query('SELECT id, name, email, phone, role, status, created_at FROM users ORDER BY created_at DESC');
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public static function updateStatus(int $id, string $status): bool
+    {
+        $pdo = getPDO();
+        $stmt = $pdo->prepare('UPDATE users SET status = :status WHERE id = :id');
+        return $stmt->execute(['status' => $status, 'id' => $id]);
+    }
 }

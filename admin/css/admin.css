@@ -1,0 +1,117 @@
+body {
+    font-family: 'Tajawal', 'Inter', sans-serif;
+    background-color: #f8f9fa;
+}
+
+.admin-login-container {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #2F5D62 0%, #5E8B7E 100%);
+}
+
+.admin-login-card {
+    background: white;
+    padding: 3rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 450px;
+}
+
+.admin-login-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.admin-login-header img {
+    height: 60px;
+    margin-bottom: 1rem;
+}
+
+.admin-login-header h2 {
+    color: #2F5D62;
+    font-weight: 700;
+}
+
+.btn-primary-custom {
+    background-color: #DFEEEA;
+    color: #2F5D62;
+    border: 2px solid #2F5D62;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.btn-primary-custom:hover {
+    background-color: #2F5D62;
+    color: white;
+}
+
+/* Sidebar Dashboard Styles */
+.admin-wrapper {
+    display: flex;
+    min-height: 100vh;
+}
+
+.admin-sidebar {
+    width: 250px;
+    background-color: #2F5D62;
+    color: white;
+    transition: all 0.3s;
+}
+
+.admin-sidebar .sidebar-header {
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.admin-sidebar ul.components {
+    padding: 20px 0;
+}
+
+.admin-sidebar ul li a {
+    padding: 15px 20px;
+    font-size: 1.1em;
+    display: block;
+    color: #DFEEEA;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+.admin-sidebar ul li a:hover,
+.admin-sidebar ul li.active > a {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+    border-right: 4px solid #A7C4BC;
+}
+
+.admin-sidebar ul li a i {
+    margin-left: 10px;
+}
+
+.admin-content {
+    flex-grow: 1;
+    padding: 20px;
+    background: #f4f7f6;
+}
+
+.admin-navbar {
+    background: white;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.dashboard-card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    transition: transform 0.2s;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+}

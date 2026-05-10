@@ -10,10 +10,10 @@ INSERT INTO users (name, email, phone, password_hash, role, status) VALUES
 ('سارة العائدة', 'sara@example.com', '+963955500003', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'customer', 'active');
 
 -- 2. Insert Properties
-INSERT INTO properties (title, description, type, rooms, size_m2, floor, price_per_month, status, amenities_json) VALUES
-('شقة فاخرة 3 غرف نوم مع إطلالة على الوادي', 'شقة واسعة مع إطلالات خلابة على وادي الجوز. تشطيب عصري.', 'residential', 3, 140.5, 4, 350.00, 'available', '["parking", "elevator", "generator", "balcony"]'),
-('شقة مريحة 2 غرف نوم في الوسط', 'وحدة عائلية مريحة تقع بالقرب من بوابة المشروع الرئيسية.', 'residential', 2, 95.0, 2, 220.00, 'available', '["parking", "elevator"]'),
-('بنتهاوس فاخر', 'معيشة في الطابق العلوي مع تراس خاص وتخزين ماء.', 'residential', 4, 210.0, 8, 600.00, 'available', '["parking", "elevator", "generator", "water storage", "smart home"]');
+INSERT INTO properties (title, description, location, image_url, type, rooms, size_m2, floor, price_per_month, status, amenities_json) VALUES
+('شقة فاخرة 3 غرف نوم مع إطلالة على الوادي', 'شقة واسعة مع إطلالات خلابة على وادي الجوز. تشطيب عصري.', 'وادي الجوز، حماة', 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=900&q=80', 'residential', 3, 140.5, 4, 350.00, 'available', '["parking", "elevator", "generator", "balcony"]'),
+('شقة مريحة 2 غرف نوم في الوسط', 'وحدة عائلية مريحة تقع بالقرب من بوابة المشروع الرئيسية.', 'الحي التجاري، حماة', 'https://images.unsplash.com/photo-1502672260266-1c1de2d93688?auto=format&fit=crop&w=900&q=80', 'residential', 2, 95.0, 2, 220.00, 'available', '["parking", "elevator"]'),
+('بنتهاوس فاخر', 'معيشة في الطابق العلوي مع تراس خاص وتخزين ماء.', 'الطابق الأخير، حماة', 'https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=900&q=80', 'residential', 4, 210.0, 8, 600.00, 'available', '["parking", "elevator", "generator", "water storage", "smart home"]');
 
 -- 3. Insert Property Images (Assuming default placeholders)
 INSERT INTO property_images (property_id, image_url, is_primary) VALUES

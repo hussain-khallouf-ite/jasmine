@@ -8,13 +8,16 @@ class AuthController
 {
     public static function handle(string $action, string $method): void
     {
-        if ($method !== 'POST') {
+        if ($method !== 'POST' && $action !== 'check') {
             sendJson(['success' => false, 'message' => 'يُسمح فقط بطلبات POST.'], 405);
         }
 
         switch ($action) {
             case 'login':
                 self::login();
+                break;
+            case 'check':
+                self::check();
                 break;
             case 'register':
                 self::register();
@@ -24,6 +27,15 @@ class AuthController
                 break;
             default:
                 sendJson(['success' => false, 'message' => 'إجراء غير معروف.'], 400);
+        }
+    }
+
+    private static function check(): void
+    {
+        if (isLoggedIn()) {
+            sendJson(['success' => true, 'user' => currentUser()]);
+        } else {
+            sendJson(['success' => false]);
         }
     }
 
