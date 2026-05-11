@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     const urlParams = new URLSearchParams(window.location.search);
     const propertyId = urlParams.get('id');
 
@@ -7,9 +7,15 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    const token = localStorage.getItem('token');
-    if (!token) {
-        window.location.href = `login.html?redirect=booking.html?id=${propertyId}`;
+    try {
+        const authResponse = await fetch('api/auth.php?action=check');
+        const authData = await authResponse.json();
+        if (!authData.success) {
+            window.location.href = `login.html`;
+            return;
+        }
+    } catch (e) {
+        window.location.href = `login.html`;
         return;
     }
 
@@ -87,8 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await fetch('api/bookings.php?action=create', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
                     property_id: propertyId,

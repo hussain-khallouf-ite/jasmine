@@ -27,7 +27,7 @@ class Property
         }
 
         if ($roomsFilter) {
-            $where[] = 'rooms >= :rooms';
+            $where[] = 'rooms = :rooms';
             $params[':rooms'] = (int)$roomsFilter;
         }
 

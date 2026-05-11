@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     const urlParams = new URLSearchParams(window.location.search);
     const bookingId = urlParams.get('id');
 
@@ -7,8 +7,14 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    const token = localStorage.getItem('token');
-    if (!token) {
+    try {
+        const authResponse = await fetch('api/auth.php?action=check');
+        const authData = await authResponse.json();
+        if (!authData.success) {
+            window.location.href = 'login.html';
+            return;
+        }
+    } catch (e) {
         window.location.href = 'login.html';
         return;
     }
@@ -30,11 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function loadBooking() {
         try {
-            const response = await fetch(`api/bookings.php?action=details&id=${bookingId}`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
+            const response = await fetch(`api/bookings.php?action=details&id=${bookingId}`);
             const data = await response.json();
 
             if (!response.ok || !data) {
@@ -77,8 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await fetch('api/bookings.php?action=confirm', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({ booking_id: bookingId })
             });
@@ -117,8 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await fetch('api/bookings.php?action=cancel', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({ booking_id: bookingId })
             });

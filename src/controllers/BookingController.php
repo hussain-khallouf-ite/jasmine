@@ -9,7 +9,8 @@ class BookingController
 {
     public function create()
     {
-        $user = requireAuth();
+        requireAuth();
+        $user = currentUser();
         $data = json_decode(file_get_contents('php://input'), true);
 
         if (!$data || !isset($data['property_id'], $data['start_date'], $data['end_date'], $data['occupants'])) {
@@ -62,14 +63,16 @@ class BookingController
 
     public function listUserBookings()
     {
-        $user = requireAuth();
+        requireAuth();
+        $user = currentUser();
         $bookings = Booking::findByUserId($user['id']);
         sendResponse($bookings);
     }
 
     public function confirm()
     {
-        $user = requireAuth();
+        requireAuth();
+        $user = currentUser();
         $data = json_decode(file_get_contents('php://input'), true);
 
         if (!$data || !isset($data['booking_id'])) {
@@ -94,7 +97,8 @@ class BookingController
 
     public function cancel()
     {
-        $user = requireAuth();
+        requireAuth();
+        $user = currentUser();
         $data = json_decode(file_get_contents('php://input'), true);
 
         if (!$data || !isset($data['booking_id'])) {

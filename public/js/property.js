@@ -91,11 +91,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Booking Button
     document.getElementById('bookBtn').addEventListener('click', () => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            window.location.href = `booking.html?id=${propertyId}`;
-        } else {
-            window.location.href = `login.html?redirect=booking.html?id=${propertyId}`;
-        }
+        window.location.href = `booking.html?id=${propertyId}`;
     });
 });

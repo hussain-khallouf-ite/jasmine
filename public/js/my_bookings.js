@@ -1,6 +1,12 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const token = localStorage.getItem('token');
-    if (!token) {
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        const authResponse = await fetch('api/auth.php?action=check');
+        const authData = await authResponse.json();
+        if (!authData.success) {
+            window.location.href = 'login.html';
+            return;
+        }
+    } catch (e) {
         window.location.href = 'login.html';
         return;
     }
@@ -35,11 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function loadBookings() {
         try {
-            const response = await fetch('api/bookings.php?action=list', {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
+            const response = await fetch('api/bookings.php?action=list');
             const data = await response.json();
 
             loadingMessage.classList.add('d-none');
@@ -118,8 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await fetch('api/bookings.php?action=cancel', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({ booking_id: currentBookingToCancel })
             });
