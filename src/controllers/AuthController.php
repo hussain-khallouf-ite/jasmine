@@ -32,7 +32,7 @@ class AuthController
 
     private static function check(): void
     {
-        if (isLoggedIn()) {
+        if (isAuthenticated()) {
             sendJson(['success' => true, 'user' => currentUser()]);
         } else {
             sendJson(['success' => false]);
