@@ -89,8 +89,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                             </div>
                         </div>
                     </td>
-                    <td>${booking.start_date}</td>
-                    <td>${booking.end_date}</td>
+                    <td>${booking.type === 'sale' ? 'شراء' : 'إيجار'}</td>
+                    <td dir="ltr" class="text-end">${booking.contract_id || '-'}</td>
+                    <td>${booking.start_date || '-'}</td>
                     <td class="fw-bold">${formatPrice(parseFloat(booking.total_amount))}</td>
                     <td>${getStatusBadge(booking.status)}</td>
                     <td>${actionsHtml}</td>

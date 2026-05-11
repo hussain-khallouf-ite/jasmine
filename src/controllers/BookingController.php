@@ -13,46 +13,68 @@ class BookingController
         $user = currentUser();
         $data = json_decode(file_get_contents('php://input'), true);
 
-        if (!$data || !isset($data['property_id'], $data['start_date'], $data['end_date'], $data['occupants'])) {
+        if (!$data || !isset($data['property_id'])) {
             sendResponse(['error' => 'البيانات غير مكتملة'], 400);
         }
 
         $propertyId = (int)$data['property_id'];
-        $startDate = $data['start_date'];
-        $endDate = $data['end_date'];
-        $occupants = (int)$data['occupants'];
-
-        if (strtotime($startDate) >= strtotime($endDate)) {
-            sendResponse(['error' => 'تاريخ المغادرة يجب أن يكون بعد تاريخ الوصول'], 400);
-        }
-
-        if (strtotime($startDate) < strtotime('today')) {
-            sendResponse(['error' => 'لا يمكن الحجز في تاريخ ماضي'], 400);
-        }
-
         $property = Property::findById($propertyId);
         if (!$property) {
             sendResponse(['error' => 'الشقة غير موجودة'], 404);
         }
 
-        if (!Booking::checkAvailability($propertyId, $startDate, $endDate)) {
-            sendResponse(['error' => 'الشقة غير متاحة في التواريخ المحددة (قد يكون هناك حجز مؤقت يرجى المحاولة بعد 24 ساعة)'], 409);
+        $type = $property['listing_type'];
+        $contractId = 'CON-' . date('Y') . '-' . rand(1000, 9999);
+
+        if ($type === 'rent') {
+            if (!isset($data['start_date'], $data['contract_type'], $data['occupants'])) {
+                sendResponse(['error' => 'البيانات غير مكتملة لحجز الإيجار'], 400);
+            }
+            $startDate = $data['start_date'];
+            $contractType = $data['contract_type'];
+            $occupants = (int)$data['occupants'];
+
+            if (strtotime($startDate) < strtotime('today')) {
+                sendResponse(['error' => 'لا يمكن الحجز في تاريخ ماضي'], 400);
+            }
+
+            if (!Booking::checkAvailability($propertyId, $type, $startDate, $contractType)) {
+                sendResponse(['error' => 'الشقة غير متاحة في التواريخ المحددة (قد يكون هناك حجز مؤقت يرجى المحاولة بعد 24 ساعة)'], 409);
+            }
+
+            $totalAmount = $contractType === 'annual' ? $property['price'] * 12 : $property['price'];
+
+            $bookingData = [
+                'user_id' => $user['id'],
+                'property_id' => $propertyId,
+                'type' => 'rent',
+                'contract_type' => $contractType,
+                'start_date' => $startDate,
+                'occupants' => $occupants,
+                'total_amount' => $totalAmount,
+                'contract_id' => $contractId,
+                'status' => 'pending'
+            ];
+        } else {
+            // Sale
+            if (!Booking::checkAvailability($propertyId, $type)) {
+                sendResponse(['error' => 'الشقة محجوزة مسبقاً للشراء'], 409);
+            }
+
+            $bookingData = [
+                'user_id' => $user['id'],
+                'property_id' => $propertyId,
+                'type' => 'sale',
+                'contract_type' => null,
+                'start_date' => date('Y-m-d'),
+                'occupants' => null,
+                'total_amount' => $property['price'],
+                'contract_id' => $contractId,
+                'status' => 'pending'
+            ];
         }
 
-        // Calculate total amount based on months
-        $days = (strtotime($endDate) - strtotime($startDate)) / (60 * 60 * 24);
-        $pricePerDay = $property['price_per_month'] / 30;
-        $totalAmount = $days * $pricePerDay;
-
-        $booking = Booking::create([
-            'user_id' => $user['id'],
-            'property_id' => $propertyId,
-            'start_date' => $startDate,
-            'end_date' => $endDate,
-            'occupants' => $occupants,
-            'total_amount' => $totalAmount,
-            'status' => 'pending'
-        ]);
+        $booking = Booking::create($bookingData);
 
         if ($booking) {
             sendResponse(['message' => 'تم مبدئياً حجز الشقة بنجاح. يرجى إتمام الدفع.', 'booking' => $booking], 201);
@@ -123,7 +145,8 @@ class BookingController
     
     public function getDetails()
     {
-        $user = requireAuth();
+        requireAuth();
+        $user = currentUser();
         $bookingId = isset($_GET['id']) ? (int)$_GET['id'] : 0;
         
         if (!$bookingId) {

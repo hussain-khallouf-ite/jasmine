@@ -73,13 +73,15 @@ function renderProperties(properties) {
             ? `<img src="${escapeHtml(prop.image_url)}" alt="صورة الشقة" class="img-thumbnail" style="width: 60px; height: 60px; object-fit: cover;">`
             : '<div class="bg-secondary text-white d-flex align-items-center justify-content-center" style="width: 60px; height: 60px; border-radius: 5px;"><i class="bi bi-image"></i></div>';
 
+        const listingTypeText = prop.listing_type === 'sale' ? 'بيع' : 'إيجار';
         tr.innerHTML = `
             <td>#${prop.id}</td>
             <td>${imgHtml}</td>
             <td class="fw-bold">${escapeHtml(prop.title)}</td>
             <td>${typeText}</td>
             <td dir="ltr" class="text-end">${prop.size_m2} م² / ${prop.rooms} غرف</td>
-            <td class="text-success fw-bold">${Number(prop.price_per_month).toLocaleString()} ل.س</td>
+            <td class="text-success fw-bold">${Number(prop.price).toLocaleString()} ل.س</td>
+            <td><span class="badge bg-info text-dark">${listingTypeText}</span></td>
             <td>${statusBadge}</td>
             <td>
                 <button class="btn btn-sm btn-outline-primary me-1" onclick="openEditModal(${prop.id})" title="تعديل"><i class="bi bi-pencil"></i></button>
@@ -117,7 +119,8 @@ function openEditModal(id) {
     document.getElementById('rooms').value = property.rooms;
     document.getElementById('size_m2').value = property.size_m2;
     document.getElementById('floor').value = property.floor;
-    document.getElementById('price_per_month').value = property.price_per_month;
+    document.getElementById('price').value = property.price;
+    document.getElementById('listing_type').value = property.listing_type;
     document.getElementById('status').value = property.status;
     
     // Convert amenities array to comma-separated string

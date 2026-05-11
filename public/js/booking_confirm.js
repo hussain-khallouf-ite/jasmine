@@ -54,9 +54,19 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
 
             document.getElementById('cPropTitle').textContent = data.property_title;
-            document.getElementById('cStartDate').textContent = data.start_date;
-            document.getElementById('cEndDate').textContent = data.end_date;
-            document.getElementById('cOccupants').textContent = data.occupants;
+            document.getElementById('cType').textContent = data.type === 'sale' ? 'شراء' : 'إيجار';
+            document.getElementById('cContractId').textContent = data.contract_id || '-';
+            
+            if (data.type === 'rent') {
+                document.getElementById('cStartDate').textContent = data.start_date;
+                document.getElementById('cContractType').textContent = data.contract_type === 'annual' ? 'سنوي' : 'شهري';
+                document.getElementById('cOccupants').textContent = data.occupants;
+            } else {
+                document.getElementById('cRentFields1').classList.add('d-none');
+                document.getElementById('cRentFields2').classList.add('d-none');
+                document.getElementById('cOccupantsRow').classList.add('d-none');
+            }
+            
             document.getElementById('cTotal').textContent = formatPrice(parseFloat(data.total_amount));
 
             loadingMessage.classList.add('d-none');

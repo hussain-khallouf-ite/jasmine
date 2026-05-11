@@ -7,17 +7,19 @@ class Booking
     public static function create(array $data): ?array
     {
         $pdo = getPDO();
-        $sql = 'INSERT INTO bookings (user_id, property_id, start_date, end_date, occupants, total_amount, status) 
-                VALUES (:user_id, :property_id, :start_date, :end_date, :occupants, :total_amount, :status)';
+        $sql = 'INSERT INTO bookings (user_id, property_id, type, contract_type, start_date, occupants, total_amount, contract_id, status) 
+                VALUES (:user_id, :property_id, :type, :contract_type, :start_date, :occupants, :total_amount, :contract_id, :status)';
         
         $stmt = $pdo->prepare($sql);
         $stmt->execute([
             'user_id' => (int)$data['user_id'],
             'property_id' => (int)$data['property_id'],
+            'type' => $data['type'],
+            'contract_type' => $data['contract_type'] ?? null,
             'start_date' => $data['start_date'],
-            'end_date' => $data['end_date'],
-            'occupants' => (int)$data['occupants'],
+            'occupants' => isset($data['occupants']) ? (int)$data['occupants'] : null,
             'total_amount' => (float)$data['total_amount'],
+            'contract_id' => $data['contract_id'] ?? null,
             'status' => $data['status'] ?? 'pending'
         ]);
 
@@ -61,17 +63,30 @@ class Booking
         return $stmt->execute(['status' => $status, 'id' => $id]);
     }
 
-    public static function checkAvailability(int $propertyId, string $startDate, string $endDate): bool
+    public static function checkAvailability(int $propertyId, string $type, string $startDate = null, string $contractType = null): bool
     {
         $pdo = getPDO();
-        // A property is unavailable if there's a booking that overlaps with the requested dates
-        // Overlap condition: existing.start_date < requested.end_date AND existing.end_date > requested.start_date
-        // Status must be 'confirmed', 'completed', OR ('pending' AND created within the last 24 hours)
         
+        if ($type === 'sale') {
+            $sql = "SELECT COUNT(*) FROM bookings 
+                    WHERE property_id = :property_id 
+                    AND (
+                        status IN ('confirmed', 'completed') 
+                        OR (status = 'pending' AND created_at > NOW() - INTERVAL 1 DAY)
+                    )";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute(['property_id' => $propertyId]);
+            return (int)$stmt->fetchColumn() === 0;
+        }
+
+        // For rent
+        $months = $contractType === 'annual' ? 12 : 1;
+        $endDate = date('Y-m-d', strtotime("+$months months", strtotime($startDate)));
+
         $sql = "SELECT COUNT(*) FROM bookings 
                 WHERE property_id = :property_id 
-                AND start_date < :end_date 
-                AND end_date > :start_date
+                AND start_date < :req_end_date 
+                AND DATE_ADD(start_date, INTERVAL IF(contract_type = 'annual', 12, 1) MONTH) > :req_start_date
                 AND (
                     status IN ('confirmed', 'completed') 
                     OR (status = 'pending' AND created_at > NOW() - INTERVAL 1 DAY)
@@ -80,11 +95,10 @@ class Booking
         $stmt = $pdo->prepare($sql);
         $stmt->execute([
             'property_id' => $propertyId,
-            'start_date' => $startDate,
-            'end_date' => $endDate
+            'req_start_date' => $startDate,
+            'req_end_date' => $endDate
         ]);
         
-        $count = (int)$stmt->fetchColumn();
-        return $count === 0; // Available if count is 0
+        return (int)$stmt->fetchColumn() === 0;
     }
 }

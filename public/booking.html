@@ -52,17 +52,20 @@
                         <div class="card-body p-4">
                             <h4 class="fw-bold mb-4">تفاصيل الحجز</h4>
                             <form id="bookingForm">
-                                <div class="row mb-3">
+                                <div class="row mb-3" id="rentFields">
                                     <div class="col-md-6">
-                                        <label for="startDate" class="form-label">تاريخ الوصول</label>
+                                        <label for="startDate" class="form-label">تاريخ البدء</label>
                                         <input type="date" class="form-control" id="startDate" required>
                                     </div>
                                     <div class="col-md-6">
-                                        <label for="endDate" class="form-label">تاريخ المغادرة</label>
-                                        <input type="date" class="form-control" id="endDate" required>
+                                        <label for="contractType" class="form-label">نوع العقد</label>
+                                        <select class="form-select" id="contractType" required>
+                                            <option value="monthly">شهري</option>
+                                            <option value="annual">سنوي</option>
+                                        </select>
                                     </div>
                                 </div>
-                                <div class="mb-4">
+                                <div class="mb-4" id="occupantsField">
                                     <label for="occupants" class="form-label">عدد الأشخاص</label>
                                     <input type="number" class="form-control" id="occupants" min="1" max="10" required>
                                 </div>

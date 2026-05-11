@@ -98,8 +98,8 @@ class AdminPropertyController
 
         $floor = (int)($input['floor'] ?? 0);
 
-        $price = (float)($input['price_per_month'] ?? 0);
-        if ($price <= 0) $errors['price_per_month'] = 'السعر غير صالح.';
+        $price = (float)($input['price'] ?? 0);
+        if ($price <= 0) $errors['price'] = 'السعر غير صالح.';
 
         if (!empty($errors)) {
             sendJson(['success' => false, 'errors' => $errors], 422);
@@ -125,7 +125,8 @@ class AdminPropertyController
             'rooms' => $rooms,
             'size_m2' => $size_m2,
             'floor' => $floor,
-            'price_per_month' => $price,
+            'price' => $price,
+            'listing_type' => in_array($input['listing_type'] ?? '', ['rent', 'sale']) ? $input['listing_type'] : 'rent',
             'status' => in_array($input['status'] ?? '', ['available', 'reserved', 'unavailable']) ? $input['status'] : 'available',
             'amenities' => $amenities
         ];

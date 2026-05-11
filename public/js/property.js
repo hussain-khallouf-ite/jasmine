@@ -11,12 +11,13 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    function formatPrice(price) {
-        return new Intl.NumberFormat('en-US', {
+    function formatPrice(price, listingType) {
+        const formatted = new Intl.NumberFormat('en-US', {
             style: 'currency',
             currency: 'USD',
             maximumFractionDigits: 0
-        }).format(price) + '/شهر';
+        }).format(price);
+        return listingType === 'rent' ? formatted + '/شهر' : formatted;
     }
 
     function showError(message) {
@@ -46,11 +47,12 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('propTitle').textContent = property.title;
             document.getElementById('propDesc').textContent = property.description;
             document.getElementById('propLocation').innerHTML = `<i class="bi bi-geo-alt"></i> ${property.location}`;
-            document.getElementById('propPrice').textContent = formatPrice(parseFloat(property.price_per_month));
+            document.getElementById('propPrice').textContent = formatPrice(parseFloat(property.price), property.listing_type);
             document.getElementById('propRooms').textContent = property.rooms;
             document.getElementById('propSize').textContent = property.size_m2 + ' م²';
             document.getElementById('propFloor').textContent = property.floor;
             document.getElementById('propType').textContent = property.type === 'commercial' ? 'مساحة تجارية' : 'شقة سكنية';
+            document.getElementById('propListingType').textContent = property.listing_type === 'sale' ? 'للبيع' : 'للإيجار';
 
             // Status badge
             const statusBadge = document.getElementById('propStatus');

@@ -12,7 +12,7 @@ class Property
         $typeFilter = $options['type'] ?? null;
         $roomsFilter = $options['rooms'] ?? null;
 
-        $sql = 'SELECT id, title, description, location, image_url, type, rooms, size_m2, floor, price_per_month, status, amenities_json, created_at FROM properties';
+        $sql = 'SELECT id, title, description, location, image_url, type, rooms, size_m2, floor, price, listing_type, status, amenities_json, created_at FROM properties';
         $params = [];
         $where = [];
 
@@ -88,8 +88,8 @@ class Property
     public static function create(array $data): ?array
     {
         $pdo = getPDO();
-        $sql = 'INSERT INTO properties (title, description, location, image_url, type, rooms, size_m2, floor, price_per_month, status, amenities_json) 
-                VALUES (:title, :description, :location, :image_url, :type, :rooms, :size_m2, :floor, :price_per_month, :status, :amenities_json)';
+        $sql = 'INSERT INTO properties (title, description, location, image_url, type, rooms, size_m2, floor, price, listing_type, status, amenities_json) 
+                VALUES (:title, :description, :location, :image_url, :type, :rooms, :size_m2, :floor, :price, :listing_type, :status, :amenities_json)';
         
         $stmt = $pdo->prepare($sql);
         $stmt->execute([
@@ -101,7 +101,8 @@ class Property
             'rooms' => (int)$data['rooms'],
             'size_m2' => (float)$data['size_m2'],
             'floor' => (int)$data['floor'],
-            'price_per_month' => (float)$data['price_per_month'],
+            'price' => (float)$data['price'],
+            'listing_type' => $data['listing_type'] ?? 'rent',
             'status' => $data['status'] ?? 'available',
             'amenities_json' => isset($data['amenities']) ? json_encode($data['amenities']) : null
         ]);
@@ -116,8 +117,8 @@ class Property
         $sql = 'UPDATE properties SET 
                 title = :title, description = :description, location = :location, 
                 image_url = :image_url, type = :type, rooms = :rooms, 
-                size_m2 = :size_m2, floor = :floor, price_per_month = :price_per_month, 
-                status = :status, amenities_json = :amenities_json 
+                size_m2 = :size_m2, floor = :floor, price = :price, 
+                listing_type = :listing_type, status = :status, amenities_json = :amenities_json 
                 WHERE id = :id';
         
         $stmt = $pdo->prepare($sql);
@@ -131,7 +132,8 @@ class Property
             'rooms' => (int)$data['rooms'],
             'size_m2' => (float)$data['size_m2'],
             'floor' => (int)$data['floor'],
-            'price_per_month' => (float)$data['price_per_month'],
+            'price' => (float)$data['price'],
+            'listing_type' => $data['listing_type'] ?? 'rent',
             'status' => $data['status'] ?? 'available',
             'amenities_json' => isset($data['amenities']) ? json_encode($data['amenities']) : null
         ]);
