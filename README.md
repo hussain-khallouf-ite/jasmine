@@ -54,6 +54,6 @@ Welcome to the Al-Yasmin Apartment Booking System codebase, built natively in PH
 6. **View the Project**
    - Open your web browser and visit: `http://localhost/jasmine/public/`
 
-## Default Users (Passwords = `password123`)
+## Default Users (Passwords = `password`)
 - **Admin**: `admin@alyasmin.sy`
 - **Customer**: `ahmad@example.com`

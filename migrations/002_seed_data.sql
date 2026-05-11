@@ -3,7 +3,7 @@
 
 USE alyasmin_db;
 
--- 1. Insert Admin and Users (Password is 'password123' bcrypt hashed)
+-- 1. Insert Admin and Users (Password is 'password' bcrypt hashed)
 INSERT INTO users (name, email, phone, password_hash, role, status) VALUES
 ('مدير الياسمين', 'admin@alyasmin.sy', '+963955500001', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin', 'active'),
 ('أحمد العميل', 'ahmad@example.com', '+963955500002', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'customer', 'active'),
