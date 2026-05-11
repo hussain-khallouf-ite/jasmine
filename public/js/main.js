@@ -35,12 +35,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const errorMessage = document.getElementById('errorMessage');
 
     if (featuredList && template) {
-        function formatPrice(price) {
-            return new Intl.NumberFormat('en-US', {
+        function formatPrice(price, listingType) {
+            const formatted = new Intl.NumberFormat('en-US', {
                 style: 'currency',
                 currency: 'USD',
                 maximumFractionDigits: 0
-            }).format(price) + '/شهر';
+            }).format(price);
+            return listingType === 'rent' ? formatted + '/شهر' : formatted;
         }
 
         async function loadFeaturedProperties() {
@@ -65,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const image = property.image_url ? property.image_url : 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600"><rect width="800" height="600" fill="%23f0f0f0"/><text x="50%" y="50%" font-family="Arial" font-size="24" fill="%23999" dominant-baseline="middle" text-anchor="middle">صورة غير متوفرة</text></svg>';
                     imgDiv.style.backgroundImage = `url('${image}')`;
                     
-                    clone.querySelector('.property-price').textContent = formatPrice(parseFloat(property.price_per_month));
+                    clone.querySelector('.property-price').textContent = formatPrice(parseFloat(property.price), property.listing_type);
                     clone.querySelector('.property-title').textContent = property.title;
                     clone.querySelector('.property-description').textContent = property.description;
                     clone.querySelector('.property-location').textContent = property.location;

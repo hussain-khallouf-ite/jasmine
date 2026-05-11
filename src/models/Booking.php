@@ -85,8 +85,11 @@ class Booking
 
         $sql = "SELECT COUNT(*) FROM bookings 
                 WHERE property_id = :property_id 
-                AND start_date < :req_end_date 
-                AND DATE_ADD(start_date, INTERVAL IF(contract_type = 'annual', 12, 1) MONTH) > :req_start_date
+                AND (
+                    (type = 'sale') 
+                    OR 
+                    (type = 'rent' AND start_date < :req_end_date AND DATE_ADD(start_date, INTERVAL IF(contract_type = 'annual', 12, 1) MONTH) > :req_start_date)
+                )
                 AND (
                     status IN ('confirmed', 'completed') 
                     OR (status = 'pending' AND created_at > NOW() - INTERVAL 1 DAY)
