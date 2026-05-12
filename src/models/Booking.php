@@ -88,7 +88,7 @@ class Booking
                 AND (
                     (type = 'sale') 
                     OR 
-                    (type = 'rent' AND start_date < :req_end_date AND DATE_ADD(start_date, INTERVAL IF(contract_type = 'annual', 12, 1) MONTH) > :req_start_date)
+                    (type = 'rent' AND start_date < :req_end_date AND IF(contract_type = 'annual', DATE_ADD(start_date, INTERVAL 12 MONTH), DATE_ADD(start_date, INTERVAL 1 MONTH)) > :req_start_date)
                 )
                 AND (
                     status IN ('confirmed', 'completed') 
