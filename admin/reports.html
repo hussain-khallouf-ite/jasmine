@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة التحكم | الياسمين</title>
+    <title>التقارير | الياسمين</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,7 +29,7 @@
             </div>
             
             <ul class="list-unstyled components">
-                <li class="active">
+                <li>
                     <a href="index.html"><i class="bi bi-speedometer2"></i> الرئيسية</a>
                 </li>
                 <li>
@@ -38,10 +38,9 @@
                 <li>
                     <a href="users.html"><i class="bi bi-people"></i> المستخدمين</a>
                 </li>
-                <li>
+                <li class="active">
                     <a href="reports.html"><i class="bi bi-bar-chart"></i> التقارير</a>
                 </li>
-
             </ul>
         </nav>
 
@@ -50,7 +49,7 @@
             <!-- Navbar -->
             <nav class="navbar navbar-expand-lg admin-navbar">
                 <div class="container-fluid">
-                    <span class="navbar-brand mb-0 h1">نظرة عامة</span>
+                    <span class="navbar-brand mb-0 h1">التقارير والإحصائيات</span>
                     <div class="d-flex align-items-center ms-auto">
                         <span class="me-3"><i class="bi bi-person-circle"></i> مرحباً، <span id="adminName">المدير</span></span>
                         <a href="#" id="adminLogoutBtn" class="btn btn-outline-danger btn-sm"><i class="bi bi-box-arrow-left"></i> تسجيل الخروج</a>
@@ -61,38 +60,72 @@
             <!-- Main Content area -->
             <div class="container-fluid">
                 <div class="row mb-4">
-                    <div class="col-md-4">
-                        <div class="card dashboard-card bg-primary text-white">
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card dashboard-card">
                             <div class="card-body">
-                                <h5 class="card-title">إجمالي الشقق</h5>
-                                <h2 class="mb-0">--</h2>
+                                <h6 class="text-muted">إيرادات الإيجار</h6>
+                                <h3 id="rentRevenue">--</h3>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="card dashboard-card bg-success text-white">
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card dashboard-card">
                             <div class="card-body">
-                                <h5 class="card-title">المستخدمين النشطين</h5>
-                                <h2 class="mb-0">--</h2>
+                                <h6 class="text-muted">إيرادات المبيعات</h6>
+                                <h3 id="saleRevenue">--</h3>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="card dashboard-card bg-warning text-dark">
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card dashboard-card">
                             <div class="card-body">
-                                <h5 class="card-title">الحجوزات الجديدة</h5>
-                                <h2 class="mb-0">--</h2>
+                                <h6 class="text-muted">حجوزات الإيجار</h6>
+                                <h3 id="rentCount">--</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card dashboard-card">
+                            <div class="card-body">
+                                <h6 class="text-muted">طلبات الشراء</h6>
+                                <h3 id="saleCount">--</h3>
                             </div>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-lg-8">
                         <div class="card dashboard-card">
                             <div class="card-body">
-                                <h5 class="card-title mb-4">أحدث النشاطات</h5>
-                                <p class="text-muted">لا توجد نشاطات حالياً.</p>
+                                <h5 class="card-title mb-4">أحدث الحجوزات والمعاملات</h5>
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>المستخدم</th>
+                                                <th>العقار</th>
+                                                <th>النوع</th>
+                                                <th>المبلغ</th>
+                                                <th>التاريخ</th>
+                                                <th>الحالة</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="recentBookingsTable">
+                                            <tr><td colspan="6" class="text-center">جاري التحميل...</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="card dashboard-card">
+                            <div class="card-body">
+                                <h5 class="card-title mb-4">توزع حالة العقارات</h5>
+                                <div id="propertyStats">
+                                    <!-- Property stats summary -->
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -103,6 +136,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/auth.js"></script>
-    <script src="js/dashboard.js"></script>
+    <script src="js/reports.js"></script>
 </body>
 </html>

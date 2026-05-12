@@ -31,16 +31,16 @@ class AdminDashboardController
         $stmt = $pdo->query("SELECT COUNT(*) as active FROM users WHERE status = 'active' AND role = 'customer'");
         $activeUsers = (int)$stmt->fetch(PDO::FETCH_ASSOC)['active'];
 
-        // New bookings (Using properties marked as 'reserved' since bookings table is unused)
-        $stmt = $pdo->query("SELECT COUNT(*) as reserved FROM properties WHERE status = 'reserved'");
-        $reservedProperties = (int)$stmt->fetch(PDO::FETCH_ASSOC)['reserved'];
+        // New bookings (Using actual bookings table)
+        $stmt = $pdo->query("SELECT COUNT(*) as total FROM bookings WHERE status = 'pending' OR status = 'confirmed'");
+        $newBookings = (int)$stmt->fetch(PDO::FETCH_ASSOC)['total'];
 
         sendJson([
             'success' => true,
             'stats' => [
                 'total_properties' => $totalProperties,
                 'active_users' => $activeUsers,
-                'new_bookings' => $reservedProperties
+                'new_bookings' => $newBookings
             ]
         ]);
     }
