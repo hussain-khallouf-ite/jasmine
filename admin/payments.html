@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة الدفعات | الياسمين</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap 5 CSS (RTL) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <!-- Admin Custom CSS -->
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+    <div class="admin-wrapper">
+        <!-- Sidebar -->
+        <nav class="admin-sidebar">
+            <div class="sidebar-header">
+                <h3>لوحة الإدارة</h3>
+            </div>
+            
+            <ul class="list-unstyled components">
+                <li>
+                    <a href="index.html"><i class="bi bi-speedometer2"></i> الرئيسية</a>
+                </li>
+                <li>
+                    <a href="properties.html"><i class="bi bi-building"></i> الشقق</a>
+                </li>
+                <li>
+                    <a href="users.html"><i class="bi bi-people"></i> المستخدمين</a>
+                </li>
+                <li>
+                    <a href="reports.html"><i class="bi bi-bar-chart"></i> التقارير</a>
+                </li>
+                <li class="active">
+                    <a href="payments.html"><i class="bi bi-cash-stack"></i> الدفعات</a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Page Content -->
+        <div class="admin-content">
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand-lg admin-navbar">
+                <div class="container-fluid">
+                    <span class="navbar-brand mb-0 h1">إدارة الدفعات</span>
+                    <div class="d-flex align-items-center ms-auto">
+                        <span class="me-3"><i class="bi bi-person-circle"></i> مرحباً، <span id="adminName">المدير</span></span>
+                        <a href="#" id="adminLogoutBtn" class="btn btn-outline-danger btn-sm"><i class="bi bi-box-arrow-left"></i> تسجيل الخروج</a>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Main Content area -->
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card dashboard-card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center mb-4">
+                                    <h5 class="card-title mb-0">سجل الدفعات</h5>
+                                    <button class="btn btn-primary-custom" onclick="openPaymentModal()">
+                                        <i class="bi bi-plus-circle"></i> تسجيل دفعة جديدة
+                                    </button>
+                                </div>
+                                
+                                <div id="paymentsMessage"></div>
+
+                                <div class="table-responsive">
+                                    <table class="table table-hover align-middle">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>المعرف</th>
+                                                <th>الحجز / العقد</th>
+                                                <th>العميل</th>
+                                                <th>المبلغ</th>
+                                                <th>الطريقة</th>
+                                                <th>التاريخ</th>
+                                                <th>بواسطة</th>
+                                                <th>ملاحظات</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="paymentsTableBody">
+                                            <tr><td colspan="8" class="text-center">جاري التحميل...</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Record Payment Modal -->
+    <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="paymentForm">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="paymentModalLabel">تسجيل دفعة كاش</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="إغلاق"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="modalMessage"></div>
+                        
+                        <div class="mb-3">
+                            <label for="booking_id" class="form-label">اختر الحجز / العقد <span class="text-danger">*</span></label>
+                            <select class="form-select" id="booking_id" name="booking_id" required>
+                                <option value="">جاري تحميل الحجوزات المعلقة...</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="amount" class="form-label">المبلغ المدفوع <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" id="amount" name="amount" min="1" step="0.01" required>
+                                <span class="input-group-text">ل.س</span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="method" class="form-label">طريقة الدفع</label>
+                            <select class="form-select" id="method" name="method">
+                                <option value="cash">كاش (نقداً)</option>
+                                <option value="transfer">تحويل بنكي</option>
+                                <option value="card">بطاقة ائتمان</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="notes" class="form-label">ملاحظات</label>
+                            <textarea class="form-control" id="notes" name="notes" rows="2"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                        <button type="submit" class="btn btn-primary-custom" id="savePaymentBtn">تسجيل الدفعة</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/payments.js"></script>
+</body>
+</html>

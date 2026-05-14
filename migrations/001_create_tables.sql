@@ -67,12 +67,15 @@ CREATE TABLE bookings (
 CREATE TABLE payments (
     id INT AUTO_INCREMENT PRIMARY KEY,
     booking_id INT NOT NULL,
-    method ENUM('card', 'transfer') NOT NULL,
+    method ENUM('card', 'transfer', 'cash') NOT NULL,
     amount DECIMAL(10,2) NOT NULL,
     transaction_ref VARCHAR(255) UNIQUE,
+    notes TEXT NULL,
+    recorded_by INT NULL,
     status ENUM('pending', 'completed', 'failed') DEFAULT 'pending',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (booking_id) REFERENCES bookings(id) ON DELETE CASCADE
+    FOREIGN KEY (booking_id) REFERENCES bookings(id) ON DELETE CASCADE,
+    FOREIGN KEY (recorded_by) REFERENCES users(id) ON DELETE SET NULL
 );
 
 -- Reviews Table
