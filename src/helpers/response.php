@@ -7,3 +7,8 @@ function sendJson(array $payload, int $status = 200): void
     echo json_encode($payload);
     exit;
 }
+
+function sendResponse(array $payload, int $status = 200): void
+{
+    sendJson($payload, $status);
+}

@@ -20,7 +20,8 @@ class BookingController
         $propertyId = (int)$data['property_id'];
         $property = Property::findById($propertyId);
         if (!$property) {
-            sendResponse(['error' => 'الشقة غير موجودة'], 404);
+            sendResponse(['error'
+             => 'الشقة غير موجودة'], 404);
         }
 
         $type = $property['listing_type'];
