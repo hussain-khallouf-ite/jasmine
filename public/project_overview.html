@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مشروع الياسمين | نظرة عامة</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="تعرف على تفاصيل مشروع الياسمين السكني والتجاري في مدينة حماة. المساحات الخضراء، الحدائق، والمرافق الفاخرة.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap 5 CSS (RTL) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <style>
+        /* Specific project overview styles */
+        .project-hero {
+            position: relative;
+            min-height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(94, 139, 126, 0.9) 0%, rgba(47, 93, 98, 0.95) 100%), url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1600&q=80');
+            background-size: cover;
+            background-position: center;
+            color: var(--text-light);
+            text-align: center;
+            padding: 3rem 1rem;
+        }
+        
+        .stat-card {
+            border: none;
+            border-radius: 16px;
+            background: #ffffff;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            border-top: 4px solid var(--secondary-color);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(47, 93, 98, 0.1);
+            border-top-color: var(--primary-color);
+        }
+        
+        .stat-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.95rem;
+            color: #6c757d;
+            font-weight: 500;
+        }
+
+        .amenity-pill {
+            background: var(--accent-color);
+            color: var(--primary-color);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin: 5px;
+            transition: all 0.2s ease;
+        }
+
+        .amenity-pill:hover {
+            background: var(--primary-color);
+            color: #ffffff;
+            transform: scale(1.05);
+        }
+
+        .building-card {
+            border: none;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            background: #ffffff;
+        }
+
+        .building-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(47, 93, 98, 0.12);
+        }
+
+        .building-img-container {
+            position: relative;
+            height: 240px;
+            background-color: #e9ecef;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .building-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(47, 93, 98, 0.9);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            backdrop-filter: blur(5px);
+        }
+
+        .section-desc {
+            max-width: 600px;
+            margin: 0 auto 50px auto;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light navbar-custom sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="images/logo.png" alt="شعار الياسمين" height="40" class="d-inline-block align-text-top" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'40\' height=\'40\'><circle cx=\'20\' cy=\'20\' r=\'20\' fill=\'%232F5D62\'/></svg>'">
+                الياسمين
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="تبديل التنقل">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">الرئيسية</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="project_overview.html">مشروع الياسمين</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="properties.html">استعراض الشقق</a>
+                    </li>
+                    <li class="nav-item auth-user" style="display: none;">
+                        <a class="nav-link" href="profile.html">ملفي</a>
+                    </li>
+                    <li class="nav-item auth-user" style="display: none;">
+                        <a class="nav-link" id="logoutLink" href="#">تسجيل الخروج</a>
+                    </li>
+                    <li class="nav-item auth-guest">
+                        <a class="nav-link" href="login.html">تسجيل الدخول</a>
+                    </li>
+                    <li class="nav-item auth-guest">
+                        <a class="nav-link" href="register.html">إنشاء حساب</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="project-hero">
+        <div class="hero-overlay"></div>
+        <div class="container hero-content animate-fade-in-down">
+            <h1 class="hero-title">مشروع الياسمين السكني والتجاري</h1>
+            <p class="hero-subtitle fs-5">مجتمع متكامل مجهز بأعلى معايير الرفاهية في وادي الجوز، حماة. حدائق غناء، أبراج حديثة، وبيئة عائلية آمنة.</p>
+        </div>
+    </header>
+
+    <!-- Stats Section -->
+    <section class="py-5">
+        <div class="container py-4">
+            <div class="text-center">
+                <h2 class="section-title">أرقام وإحصائيات المشروع</h2>
+                <p class="section-desc">صُمم مشروع الياسمين ليوفر بيئة حياة متكاملة وواسعة، تجمع بين المساحات السكنية والترفيهية والخدمية.</p>
+            </div>
+
+            <div class="row g-4" id="statsGrid">
+                <!-- Stats cards will be populated by JS -->
+                <div class="col-6 col-lg-3">
+                    <div class="stat-card p-4 text-center">
+                        <div class="stat-icon"><i class="bi bi-aspect-ratio"></i></div>
+                        <div class="stat-number" id="statArea">...</div>
+                        <div class="stat-label">المساحة الإجمالية</div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3">
+                    <div class="stat-card p-4 text-center">
+                        <div class="stat-icon"><i class="bi bi-houses"></i></div>
+                        <div class="stat-number" id="statBuildings">...</div>
+                        <div class="stat-label">المباني السكنية والتجارية</div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3">
+                    <div class="stat-card p-4 text-center">
+                        <div class="stat-icon"><i class="bi bi-tree"></i></div>
+                        <div class="stat-number" id="statParks">...</div>
+                        <div class="stat-label">الحدائق والملاعب</div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3">
+                    <div class="stat-card p-4 text-center">
+                        <div class="stat-icon"><i class="bi bi-building-check"></i></div>
+                        <div class="stat-number" id="statProperties">...</div>
+                        <div class="stat-label">الوحدات المتاحة للحجز</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Features / Amenities Section -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-title">ميزات وتجهيزات المشروع</h2>
+                <p class="section-desc">يوفر مشروع الياسمين تجربة عيش متكاملة مع بنية تحتية حديثة ومرافق ترفيهية وخدمية مميزة.</p>
+            </div>
+            
+            <div class="text-center px-lg-5">
+                <div class="amenity-pill"><i class="bi bi-shield-lock"></i> حراسة وكاميرات مراقبة 24/7</div>
+                <div class="amenity-pill"><i class="bi bi-water"></i> مسابح صيفية وشتوية</div>
+                <div class="amenity-pill"><i class="bi bi-lightning-charge"></i> مولدات كهرباء احتياطية للمشروع</div>
+                <div class="amenity-pill"><i class="bi bi-droplet"></i> خزانات مياه مركزية ضخمة</div>
+                <div class="amenity-pill"><i class="bi bi-p-circle"></i> مواقف سيارات تحت الأرض</div>
+                <div class="amenity-pill"><i class="bi bi-wifi"></i> شبكة إنترنت فايبر ضوئية سريعة</div>
+                <div class="amenity-pill"><i class="bi bi-controller"></i> مناطق مخصصة لألعاب الأطفال</div>
+                <div class="amenity-pill"><i class="bi bi-activity"></i> صالة رياضية مجهزة بالكامل</div>
+                <div class="amenity-pill"><i class="bi bi-shop"></i> مركز تجاري ومحلات تجزئة</div>
+                <div class="amenity-pill"><i class="bi bi-sun"></i> إنارة شوارع بالطاقة الشمسية</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Buildings Section -->
+    <section class="py-5 bg-white">
+        <div class="container py-4">
+            <div class="text-center">
+                <h2 class="section-title">استكشف المباني والأبراج</h2>
+                <p class="section-desc">اختر المبنى المناسب لك لاستعراض وتصفح الشقق والمساحات التجارية المتوفرة فيه بشكل تفاعلي.</p>
+            </div>
+
+            <div id="buildingsLoading" class="text-center py-5">
+                <div class="spinner-border text-primary-custom" role="status">
+                    <span class="visually-hidden">جاري التحميل...</span>
+                </div>
+                <p class="mt-3">جاري تحميل المباني...</p>
+            </div>
+
+            <div id="buildingsError" class="alert alert-danger d-none text-center"></div>
+
+            <div id="buildingsList" class="row g-4 justify-content-center">
+                <!-- Dynamic building list -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 text-center mt-auto">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 نظام الياسمين لحجز الشقق. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Page JS logic -->
+    <script src="js/auth.js"></script>
+    <script src="js/project_overview.js"></script>
+
+    <!-- Template for Building Card -->
+    <template id="buildingCardTemplate">
+        <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="card building-card h-100 d-flex flex-column">
+                <div class="building-img-container">
+                    <span class="building-badge"><span class="building-floors"></span> طوابق</span>
+                </div>
+                <div class="card-body p-4 d-flex flex-column">
+                    <h4 class="card-title fw-bold text-primary-custom mb-3 building-name"></h4>
+                    <p class="text-muted mb-4 small building-desc" style="min-height: 60px; line-height: 1.6;"></p>
+                    <div class="d-flex justify-content-between align-items-center mt-auto pt-3 border-top">
+                        <span class="text-muted small"><i class="bi bi-geo-alt"></i> <span class="building-location"></span></span>
+                        <a href="#" class="btn btn-primary-custom btn-sm building-link">استكشف الشقق <i class="bi bi-arrow-left-short align-middle"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+</body>
+</html>

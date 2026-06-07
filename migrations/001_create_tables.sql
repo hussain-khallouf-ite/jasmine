@@ -17,9 +17,23 @@ CREATE TABLE users (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
+-- Buildings Table
+CREATE TABLE buildings (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description TEXT NULL,
+    floors INT NOT NULL,
+    image_url VARCHAR(255) NULL,
+    location VARCHAR(255) NOT NULL DEFAULT 'غير محددة',
+    total_area_m2 DECIMAL(10,2) NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
 -- Properties Table
 CREATE TABLE properties (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    building_id INT NULL,
     title VARCHAR(255) NOT NULL,
     description TEXT,
     location VARCHAR(255) NOT NULL DEFAULT 'غير محددة',
@@ -33,7 +47,8 @@ CREATE TABLE properties (
     status ENUM('available', 'reserved', 'unavailable') DEFAULT 'available',
     amenities_json JSON,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (building_id) REFERENCES buildings(id) ON DELETE SET NULL
 );
 
 -- Property Images Table

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة المباني | الياسمين</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap 5 CSS (RTL) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <!-- Admin Custom CSS -->
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+    <div class="admin-wrapper">
+        <!-- Sidebar -->
+        <nav class="admin-sidebar">
+            <div class="sidebar-header">
+                <h3>لوحة الإدارة</h3>
+            </div>
+            
+            <ul class="list-unstyled components">
+                <li>
+                    <a href="index.html"><i class="bi bi-speedometer2"></i> الرئيسية</a>
+                </li>
+                <li class="active">
+                    <a href="buildings.html"><i class="bi bi-houses"></i> المباني</a>
+                </li>
+                <li>
+                    <a href="properties.html"><i class="bi bi-building"></i> الشقق</a>
+                </li>
+                <li>
+                    <a href="bookings.html"><i class="bi bi-calendar-check"></i> الحجوزات</a>
+                </li>
+                <li>
+                    <a href="users.html"><i class="bi bi-people"></i> المستخدمين</a>
+                </li>
+                <li>
+                    <a href="reports.html"><i class="bi bi-bar-chart"></i> التقارير</a>
+                </li>
+                <li>
+                    <a href="payments.html"><i class="bi bi-cash-stack"></i> الدفعات</a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Page Content -->
+        <div class="admin-content">
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand-lg admin-navbar">
+                <div class="container-fluid">
+                    <span class="navbar-brand mb-0 h1">إدارة المباني</span>
+                    <div class="d-flex align-items-center ms-auto">
+                        <span class="me-3"><i class="bi bi-person-circle"></i> مرحباً، <span id="adminName">المدير</span></span>
+                        <a href="#" id="adminLogoutBtn" class="btn btn-outline-danger btn-sm"><i class="bi bi-box-arrow-left"></i> تسجيل الخروج</a>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Main Content area -->
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card dashboard-card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center mb-4">
+                                    <h5 class="card-title mb-0">قائمة المباني في مشروع الياسمين</h5>
+                                    <button class="btn btn-primary-custom" onclick="openAddModal()">
+                                        <i class="bi bi-plus-circle"></i> إضافة مبنى جديد
+                                    </button>
+                                </div>
+                                
+                                <div id="buildingsMessage"></div>
+
+                                <div class="table-responsive">
+                                    <table class="table table-hover align-middle">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>المعرف</th>
+                                                <th>الصورة</th>
+                                                <th>الاسم</th>
+                                                <th>الطوابق</th>
+                                                <th>الموقع</th>
+                                                <th>المساحة الإجمالية</th>
+                                                <th>إجراءات</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="buildingsTableBody">
+                                            <tr><td colspan="7" class="text-center">جاري التحميل...</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Building Modal -->
+    <div class="modal fade" id="buildingModal" tabindex="-1" aria-labelledby="buildingModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form id="buildingForm">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="buildingModalLabel">إضافة مبنى جديد</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="إغلاق"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="modalMessage"></div>
+                        <input type="hidden" id="buildingId" name="id">
+                        
+                        <div class="row g-3">
+                            <div class="col-md-8">
+                                <label for="name" class="form-label">اسم المبنى <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="name" name="name" placeholder="مثال: برج الياسمين A" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="floors" class="form-label">عدد الطوابق <span class="text-danger">*</span></label>
+                                <input type="number" class="form-control" id="floors" name="floors" min="1" placeholder="مثال: 5" required>
+                            </div>
+                            
+                            <div class="col-12">
+                                <label for="description" class="form-label">الوصف والخدمات</label>
+                                <textarea class="form-control" id="description" name="description" rows="3" placeholder="اكتب تفاصيل إضافية عن المبنى ومزاياه..."></textarea>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label for="location" class="form-label">الموقع في المشروع</label>
+                                <input type="text" class="form-control" id="location" name="location" placeholder="مثال: قطاع أ - بجانب الحديقة">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="total_area_m2" class="form-label">المساحة الإجمالية للمبنى (م²)</label>
+                                <input type="number" class="form-control" id="total_area_m2" name="total_area_m2" min="1" step="0.01" placeholder="مثال: 5000">
+                            </div>
+
+                            <div class="col-12">
+                                <label for="image_url" class="form-label">رابط صورة المبنى</label>
+                                <div class="d-flex align-items-start gap-2">
+                                    <input type="text" class="form-control" id="image_url" name="image_url" placeholder="أدخل رابط صورة خارجية للمبنى...">
+                                    <img id="imagePreview" src="" alt="Preview" class="img-thumbnail d-none" style="width: 60px; height: 60px; object-fit: cover;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                        <button type="submit" class="btn btn-primary-custom" id="saveBuildingBtn">حفظ</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Admin Auth and Buildings Logic -->
+    <script src="js/auth.js"></script>
+    <script src="js/buildings.js"></script>
+</body>
+</html>

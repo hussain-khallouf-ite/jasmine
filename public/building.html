@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مبنى الياسمين | تفاصيل المبنى</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap 5 CSS (RTL) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <style>
+        .building-header-section {
+            background: linear-gradient(135deg, rgba(47, 93, 98, 0.95) 0%, rgba(94, 139, 126, 0.95) 100%);
+            color: #ffffff;
+            padding: 3rem 0;
+            border-radius: 0 0 24px 24px;
+        }
+
+        /* Interactive Stack Layout */
+        .building-container {
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.03);
+            padding: 30px;
+        }
+
+        .floor-row {
+            display: flex;
+            align-items: center;
+            border-bottom: 2px dashed #e9ecef;
+            padding: 20px 0;
+            transition: background-color 0.2s ease;
+        }
+
+        .floor-row:last-child {
+            border-bottom: none;
+        }
+
+        .floor-row:hover {
+            background-color: rgba(223, 238, 234, 0.25);
+        }
+
+        .floor-label {
+            min-width: 140px;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.1rem;
+        }
+
+        .properties-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            flex-grow: 1;
+        }
+
+        /* Interactive Property Slot Card */
+        .interactive-slot {
+            flex: 1 1 200px;
+            max-width: 280px;
+            border-radius: 12px;
+            padding: 15px;
+            border: 2px solid;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 110px;
+        }
+
+        .interactive-slot:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+
+        /* Slot statuses styling */
+        .slot-available {
+            background-color: #f1f8e9;
+            border-color: #81c784;
+            color: #2e7d32;
+        }
+        .slot-available:hover {
+            background-color: #e8f5e9;
+            border-color: #4caf50;
+        }
+
+        .slot-reserved {
+            background-color: #fffde7;
+            border-color: #fff176;
+            color: #f57f17;
+        }
+        .slot-reserved:hover {
+            background-color: #fffde7;
+            border-color: #fbc02d;
+        }
+
+        .slot-unavailable {
+            background-color: #fafafa;
+            border-color: #e0e0e0;
+            color: #757575;
+        }
+        .slot-unavailable:hover {
+            background-color: #f5f5f5;
+            border-color: #bdbdbd;
+        }
+
+        .slot-title {
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-bottom: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .slot-meta {
+            font-size: 0.8rem;
+            display: flex;
+            gap: 10px;
+            opacity: 0.9;
+        }
+
+        .slot-price {
+            font-weight: 800;
+            font-size: 1rem;
+            margin-top: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .bg-available { background-color: #4caf50; }
+        .bg-reserved { background-color: #fbc02d; }
+        .bg-unavailable { background-color: #e0e0e0; }
+
+        /* Building Stats Box */
+        .building-stat-box {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 15px 25px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light navbar-custom sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="images/logo.png" alt="شعار الياسمين" height="40" class="d-inline-block align-text-top" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'40\' height=\'40\'><circle cx=\'20\' cy=\'20\' r=\'20\' fill=\'%232F5D62\'/></svg>'">
+                الياسمين
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">الرئيسية</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="project_overview.html">مشروع الياسمين</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="properties.html">استعراض الشقق</a>
+                    </li>
+                    <li class="nav-item auth-user" style="display: none;">
+                        <a class="nav-link" href="profile.html">ملفي</a>
+                    </li>
+                    <li class="nav-item auth-user" style="display: none;">
+                        <a class="nav-link" id="logoutLink" href="#">تسجيل الخروج</a>
+                    </li>
+                    <li class="nav-item auth-guest">
+                        <a class="nav-link" href="login.html">تسجيل الدخول</a>
+                    </li>
+                    <li class="nav-item auth-guest">
+                        <a class="nav-link" href="register.html">إنشاء حساب</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <section class="building-header-section mb-5">
+        <div class="container text-center text-md-start">
+            <div class="row align-items-center g-4">
+                <div class="col-md-7">
+                    <a href="project_overview.html" class="text-white text-decoration-none small mb-2 d-inline-block">
+                        <i class="bi bi-arrow-right"></i> العودة لمشروع الياسمين
+                    </a>
+                    <h1 class="fw-bold mb-3" id="buildingName">جاري التحميل...</h1>
+                    <p class="lead mb-3" id="buildingDesc" style="opacity: 0.9;"></p>
+                    <div class="d-flex flex-wrap gap-3 mt-2">
+                        <span><i class="bi bi-geo-alt"></i> <span id="buildingLocation"></span></span>
+                        <span><i class="bi bi-building"></i> <span id="buildingFloorsCount"></span> طوابق</span>
+                        <span><i class="bi bi-aspect-ratio"></i> مساحة المبنى: <span id="buildingArea"></span> م²</span>
+                    </div>
+                </div>
+                <div class="col-md-5 d-flex justify-content-center justify-content-md-end gap-3">
+                    <div class="building-stat-box">
+                        <h4 class="fw-bold text-white mb-1" id="countAvailable">-</h4>
+                        <span class="small text-white-50">متاحة للحجز</span>
+                    </div>
+                    <div class="building-stat-box">
+                        <h4 class="fw-bold text-white mb-1" id="countReserved">-</h4>
+                        <span class="small text-white-50">محجوزة</span>
+                    </div>
+                    <div class="building-stat-box">
+                        <h4 class="fw-bold text-white mb-1" id="countTotal">-</h4>
+                        <span class="small text-white-50">إجمالي الوحدات</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="mb-5">
+        <div class="container">
+            <div id="loadingLayout" class="text-center py-5">
+                <div class="spinner-border text-primary-custom" role="status">
+                    <span class="visually-hidden">جاري التحميل...</span>
+                </div>
+                <p class="mt-3">جاري تحميل المخطط التفاعلي للشقق...</p>
+            </div>
+
+            <div id="errorLayout" class="alert alert-danger d-none text-center"></div>
+
+            <div id="buildingContent" class="d-none">
+                <!-- Legend of status -->
+                <div class="d-flex justify-content-center gap-4 mb-4 flex-wrap bg-light p-3 rounded-4">
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="status-dot bg-available"></span>
+                        <span class="small fw-bold text-success">متاح للحجز</span>
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="status-dot bg-reserved"></span>
+                        <span class="small fw-bold text-warning">محجوز / قيد الدفع</span>
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="status-dot bg-unavailable"></span>
+                        <span class="small fw-bold text-muted">غير متاح</span>
+                    </div>
+                </div>
+
+                <!-- Interactive Building Visualizer Stack -->
+                <div class="building-container mb-4 position-relative">
+                    <h3 class="fw-bold text-primary-custom border-bottom pb-3 mb-4"><i class="bi bi-box"></i> المخطط ثلاثي الأبعاد للمبنى</h3>
+                    
+                    <!-- 3D Canvas Container -->
+                    <div id="building3dCanvas" style="width: 100%; height: 500px; border-radius: 12px; overflow: hidden; background-color: #f8f9fa;"></div>
+                    
+                    <!-- Tooltip for 3D interactions -->
+                    <div id="tooltip3d" class="position-absolute bg-white px-3 py-2 rounded shadow-sm border" style="display: none; pointer-events: none; z-index: 10; transform: translate(-50%, -100%); margin-top: -10px;"></div>
+
+                    <!-- Hidden 2D stack fallback -->
+                    <div id="floorVisualizerStack" class="d-none flex-column-reverse mt-4">
+                        <!-- Floors and property slots rendered here by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Quick Preview Modal -->
+    <div class="modal fade" id="slotPreviewModal" tabindex="-1" aria-labelledby="slotPreviewModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg" style="border-radius: 20px; overflow: hidden;">
+                <div class="modal-header border-0 text-white bg-primary-custom p-4">
+                    <h5 class="modal-title fw-bold" id="slotPreviewModalLabel">تفاصيل الشقة السريعة</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="إغلاق"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div id="modalSlotImg" class="rounded-4 mb-4" style="height: 200px; background-size: cover; background-position: center; background-color: #f0f0f0;"></div>
+                    <h4 class="fw-bold mb-1 text-dark" id="modalSlotTitle"></h4>
+                    <p class="text-muted small mb-3" id="modalSlotLocation"><i class="bi bi-geo-alt"></i> </p>
+                    
+                    <div class="row text-center g-3 mb-4">
+                        <div class="col-4">
+                            <div class="p-2 border rounded-3 bg-light">
+                                <span class="d-block small text-muted">المساحة</span>
+                                <span class="fw-bold text-dark" id="modalSlotSize"></span>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="p-2 border rounded-3 bg-light">
+                                <span class="d-block small text-muted">الغرف</span>
+                                <span class="fw-bold text-dark" id="modalSlotRooms"></span>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="p-2 border rounded-3 bg-light">
+                                <span class="d-block small text-muted">الطابق</span>
+                                <span class="fw-bold text-dark" id="modalSlotFloor"></span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between align-items-center mb-4 p-3 border rounded-4 bg-light">
+                        <div>
+                            <span class="d-block small text-muted" id="modalListingType">سعر الإيجار</span>
+                            <span class="fs-4 fw-extrabold text-primary-custom fw-bold" id="modalSlotPrice"></span>
+                        </div>
+                        <span class="badge fs-6 p-2 px-3" id="modalSlotStatus"></span>
+                    </div>
+
+                    <p class="text-muted small" id="modalSlotDesc"></p>
+                </div>
+                <div class="modal-footer border-0 p-4 pt-0 gap-2">
+                    <button type="button" class="btn btn-secondary w-100 py-2.5 rounded-3" data-bs-dismiss="modal">إغلاق</button>
+                    <a href="#" class="btn btn-primary-custom w-100 py-2.5 rounded-3" id="modalBookBtn">طلب حجز الشقة</a>
+                    <a href="#" class="btn btn-outline-primary w-100 py-2.5 rounded-3" id="modalDetailsBtn">تفاصيل كاملة</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 text-center">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 نظام الياسمين لحجز الشقق. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Three.js and OrbitControls -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    
+    <!-- Page JS logic -->
+    <script src="js/auth.js"></script>
+    <script src="js/building.js"></script>
+</body>
+</html>
